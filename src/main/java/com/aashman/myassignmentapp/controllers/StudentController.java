@@ -49,7 +49,7 @@ public class StudentController {
 		if (studentService.enterStudentHomePage(userName, password)) {
 			return "StudentHome";
 		} else {
-			model.addAttribute("msg", "password or email you entered is incorrect");
+			model.addAttribute("msg", "username or password is incorrect");
 			return "login/studentLogIn";
 		}
 	}

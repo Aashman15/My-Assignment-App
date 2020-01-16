@@ -8,11 +8,13 @@
 </head>
 <body>
 	<h1>Teacher LogIn Form:</h1>
-	<form>
-		User name: <input type="text" /><br /> Password: <input
-			type="password" /> <br /> <input type="submit" value="LogIn" />
+	<p style="color:red;">${msg}</p>
+	<form action="enterTeacherHome" method="post">
+		User name: <input type="text" name="username" /><br /> Password: <input
+			type="password" name="password" /> <br /> <input type="submit"
+			value="LogIn" />
 	</form>
 	<p>If you don't have account! please sign up</p>
-	<a href = "signUpTeacher">Sign Up</a>
+	<a href="signUpTeacher">Sign Up</a>
 </body>
 </html>

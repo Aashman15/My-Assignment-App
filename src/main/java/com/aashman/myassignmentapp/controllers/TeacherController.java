@@ -7,13 +7,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import com.aashman.myassignmentapp.models.Teacher;
 import com.aashman.myassignmentapp.service.TeacherService;
 
 @Controller
 public class TeacherController {
-	
 	@Autowired
 	TeacherService teacherService;
 
@@ -26,16 +25,26 @@ public class TeacherController {
 	public String signUpTeacher() {
 		return "login/teacherSignUp";
 	}
-	
+
 	@RequestMapping(value = "/registerTeacher", method = RequestMethod.POST)
 	@Transactional
 	public String registerStudent(@ModelAttribute Teacher teacher, Model model) {
-		if(teacherService.addTeacher(teacher)) {
+		if (teacherService.addTeacher(teacher)) {
 			return "login/teacherLogIn";
+		} else {
+			model.addAttribute("msg", "Please fill the boxes.");
+			return "login/teacherSignUp";
 		}
-		else {
-		model.addAttribute("msg","Please fill the boxes.");
-		return "login/teacherSignUp";
+	}
+
+	@RequestMapping(value = "/enterTeacherHome", method = RequestMethod.POST)
+	public String enterTeacherHome(@RequestParam("username") String username, @RequestParam("password") String password,
+			Model model) {
+		if (teacherService.enterTeacherHomePage(username, password)) {
+			return "TeacherHome";
+		} else {
+			model.addAttribute("msg", "Username or password is incorrect");
+			return "login/teacherLogIn";
 		}
 	}
 }
