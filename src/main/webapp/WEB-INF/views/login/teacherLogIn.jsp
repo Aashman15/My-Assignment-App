@@ -12,5 +12,7 @@
 		User name: <input type="text" /><br /> Password: <input
 			type="password" /> <br /> <input type="submit" value="LogIn" />
 	</form>
+	<p>If you don't have account! please sign up</p>
+	<a href = "signUpTeacher">Sign Up</a>
 </body>
 </html>

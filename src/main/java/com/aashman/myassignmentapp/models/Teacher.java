@@ -1,29 +1,30 @@
 package com.aashman.myassignmentapp.models;
 
+import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Student {
+public class Teacher {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	@GeneratedValue
+	private long id;
 	private String firstName;
 	private String middleName;
 	private String lastName;
 	private String address;
-	private String phoneNumber;
-	private String dob;
+	private long phoneNumber;
+	private Date dob;
 	private String gender;
 	private String email;
     private String userName;
     private String password;
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getFirstName() {
@@ -50,16 +51,16 @@ public class Student {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getPhoneNumber() {
+	public long getPhoneNumber() {
 		return phoneNumber;
 	}
-	public void setPhoneNumber(String phoneNumber) {
+	public void setPhoneNumber(long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	public String getDob() {
+	public Date getDob() {
 		return dob;
 	}
-	public void setDob(String dob) {
+	public void setDob(Date dob) {
 		this.dob = dob;
 	}
 	public String getGender() {
