@@ -18,10 +18,10 @@ public class StudentController {
 
 	@Autowired
 	StudentRepository studentRepository;
-	
+
 	@Autowired
-    StudentService studentService;
-    
+	StudentService studentService;
+
 	@RequestMapping("/studentLogIn")
 	public String showStudentLogIn() {
 		return "login/studentLogIn";
@@ -34,13 +34,23 @@ public class StudentController {
 
 	@RequestMapping(value = "/registerStudent", method = RequestMethod.POST)
 	@Transactional
-	public String registerStudent(@RequestParam("gender")String gender, @ModelAttribute Student student, Model model) {
-		if(studentService.addStudent(student)) {
+	public String registerStudent(@RequestParam("gender") String gender, @ModelAttribute Student student, Model model) {
+		if (studentService.addStudent(student)) {
 			return "login/studentLogIn";
+		} else {
+			model.addAttribute("msg", "Please fill the boxes.");
+			return "login/studentSignUp";
 		}
-		else {
-		model.addAttribute("msg","Please fill the boxes.");
-		return "login/studentSignUp";
+	}
+
+	@RequestMapping(value = "/enterStudentHome", method = RequestMethod.POST)
+	public String logInStudent(@RequestParam("userName") String userName, @RequestParam("password") String password,
+			Model model) {
+		if (studentService.enterStudentHomePage(userName, password)) {
+			return "StudentHome";
+		} else {
+			model.addAttribute("msg", "password or email you entered is incorrect");
+			return "login/studentLogIn";
 		}
 	}
 }

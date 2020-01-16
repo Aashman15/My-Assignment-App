@@ -8,9 +8,10 @@
 </head>
 <body>
 	<h1>Student LogIn Form:</h1>
-	<form>
-		User name: <input type="text" /><br /> Password: <input
-			type="password" /> <br /> <input type="submit" value="LogIn" />
+	<p style="color:red;">${msg}</p>
+	<form action="enterStudentHome" method="post">
+		User name: <input type="text" name="userName" /><br /> Password: <input
+			type="password" name="password"/> <br /> <input type="submit" value="LogIn" />
 	</form>
 	<p>If you don't have account! click here to signup</p>
 	<a href="signUpStudent">Sign Up</a>

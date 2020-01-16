@@ -1,5 +1,7 @@
 package com.aashman.myassignmentapp.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,4 +24,33 @@ public class StudentServiceImpl implements StudentService {
 			studentRepository.save(student);
 			return true;
 	}
+
+	@Override
+	public boolean enterStudentHomePage(String userName, String password) {
+		List<Student> students = studentRepository.findAll();
+		for(Student s : students) {
+			if(s.getUserName().equals(userName) && s.getPassword().equals(password)) {
+				return true;
+			}
+		}
+        return false;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
