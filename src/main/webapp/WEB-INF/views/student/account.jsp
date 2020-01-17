@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Student | Home</title>
+<title>Student | Account</title>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
@@ -14,7 +14,7 @@
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
-<body background="images/bgs.jpg">
+<body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<a class="navbar-brand" href="#">Grihakarya</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -24,7 +24,7 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 			<ul class="navbar-nav">
-				<li class="nav-item active"><a class="nav-link"
+				<li class="nav-item"><a class="nav-link"
 					href="showStudentHome">Home </a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="showStudentAssignmentsPage">Assignments</a></li>
@@ -32,7 +32,7 @@
 					href="showStudentTeachersPage">Teachers</a></li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="nav-link"
+				<li class="nav-item"><a class="nav-link active"
 					href="showStudentAccountPage">Account</a></li>
 				<li class="nav-item"><a class="nav-link" href="showIndex">Log Out</a></li>
 			</ul>

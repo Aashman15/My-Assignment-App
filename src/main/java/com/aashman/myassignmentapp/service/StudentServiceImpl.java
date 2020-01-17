@@ -17,40 +17,23 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public boolean addStudent(Student student) {
 		if (student.getFirstName().isEmpty() || student.getLastName().isEmpty() || student.getAddress().isEmpty()
-				|| student.getPhoneNumber().isEmpty() || student.getDob().isEmpty() || student.getGender().toString().isBlank()
-				|| student.getEmail().isEmpty() || student.getUserName().isEmpty() || student.getPassword().isEmpty()) {
+				|| student.getPhoneNumber().isEmpty() || student.getDob().isEmpty()
+				|| student.getGender().toString().isBlank() || student.getUserName().isEmpty()
+				|| student.getPassword().isEmpty()) {
 			return false;
-		} 
-			studentRepository.save(student);
-			return true;
+		}
+		studentRepository.save(student);
+		return true;
 	}
 
 	@Override
 	public boolean enterStudentHomePage(String userName, String password) {
 		List<Student> students = studentRepository.findAll();
-		for(Student s : students) {
-			if(s.getUserName().equals(userName) && s.getPassword().equals(password)) {
+		for (Student s : students) {
+			if (s.getUserName().equals(userName) && s.getPassword().equals(password)) {
 				return true;
 			}
 		}
-        return false;
+		return false;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

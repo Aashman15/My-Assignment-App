@@ -30,7 +30,8 @@ public class TeacherController {
 	@Transactional
 	public String registerStudent(@ModelAttribute Teacher teacher, Model model) {
 		if (teacherService.addTeacher(teacher)) {
-			return "login/teacherLogIn";
+			model.addAttribute("message","Sign Up Sucessfully,Click Log In To Log In.");
+			return "login/teacherSignUp";
 		} else {
 			model.addAttribute("msg", "Please fill the boxes.");
 			return "login/teacherSignUp";
@@ -43,8 +44,8 @@ public class TeacherController {
 		if (teacherService.enterTeacherHomePage(username, password)) {
 			return "TeacherHome";
 		} else {
-			model.addAttribute("msg", "Username or password is incorrect");
-			return "login/teacherLogIn";
+			model.addAttribute("msg", "Username or password is incorrect please try again");
+			return "index";
 		}
 	}
 }

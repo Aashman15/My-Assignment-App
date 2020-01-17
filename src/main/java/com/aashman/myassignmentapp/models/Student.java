@@ -19,7 +19,6 @@ public class Student {
 	private String phoneNumber;
 	private String dob;
 	private String gender;
-	private String email;
 	private String userName;
 	private String password;
 
@@ -87,14 +86,6 @@ public class Student {
 		this.gender = gender;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getUserName() {
 		return userName;
 	}
@@ -109,13 +100,6 @@ public class Student {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	@Override
-	public String toString() {
-		return "Student [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
-				+ lastName + ", address=" + address + ", phoneNumber=" + phoneNumber + ", dob=" + dob + ", gender="
-				+ gender + ", email=" + email + ", userName=" + userName + ", password=" + password + "]";
 	}
 
 }

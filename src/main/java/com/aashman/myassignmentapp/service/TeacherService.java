@@ -1,5 +1,6 @@
 package com.aashman.myassignmentapp.service;
 
+
 import com.aashman.myassignmentapp.models.Teacher;
 
 public interface TeacherService {

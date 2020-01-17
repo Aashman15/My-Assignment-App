@@ -11,17 +11,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.aashman.myassignmentapp.models.Student;
 import com.aashman.myassignmentapp.repos.StudentRepository;
+import com.aashman.myassignmentapp.repos.TeacherRepository;
 import com.aashman.myassignmentapp.service.StudentService;
+import com.aashman.myassignmentapp.service.TeacherService;
 
 @Controller
 public class StudentController {
-
 	@Autowired
 	StudentRepository studentRepository;
-
 	@Autowired
 	StudentService studentService;
-
+	
+	@Autowired
+    TeacherRepository teacherRepository;
+	
 	@RequestMapping("/studentLogIn")
 	public String showStudentLogIn() {
 		return "login/studentLogIn";
@@ -34,9 +37,10 @@ public class StudentController {
 
 	@RequestMapping(value = "/registerStudent", method = RequestMethod.POST)
 	@Transactional
-	public String registerStudent(@RequestParam("gender") String gender, @ModelAttribute Student student, Model model) {
+	public String registerStudent(@ModelAttribute Student student, Model model) {
 		if (studentService.addStudent(student)) {
-			return "login/studentLogIn";
+			model.addAttribute("message", "Sign Up Sucessfully, Go back and Do Log In.");
+			return "login/studentSignUp";
 		} else {
 			model.addAttribute("msg", "Please fill the boxes.");
 			return "login/studentSignUp";
@@ -49,8 +53,44 @@ public class StudentController {
 		if (studentService.enterStudentHomePage(userName, password)) {
 			return "StudentHome";
 		} else {
-			model.addAttribute("msg", "username or password is incorrect");
-			return "login/studentLogIn";
+			model.addAttribute("msg", "username or password is incorrect, please try again");
+			return "index";
 		}
 	}
+	
+    @RequestMapping("/showStudentAccountPage")
+	public String showStudentAccount() {
+		return "student/account";
+	}
+    
+    @RequestMapping("/showStudentTeachersPage")
+    public String showStudentTeachers(Model model) {
+    	model.addAttribute("teacher", teacherRepository.findAll());
+    	return "student/teachers";
+    }
+    
+    @RequestMapping("/showStudentAssignmentsPage")
+    public String showStudentAssignments() {
+    	return "student/assignments";
+    }
+    
+    @RequestMapping("/showStudentHome")
+    public String showStudentHome() {
+    	return "StudentHome";
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
