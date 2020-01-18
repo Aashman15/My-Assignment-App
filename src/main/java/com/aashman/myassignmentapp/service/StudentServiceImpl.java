@@ -1,6 +1,7 @@
 package com.aashman.myassignmentapp.service;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -54,19 +55,30 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public boolean addStudentRequest(String dbTableName, Student student) {
 		String tname = dbTableName.toLowerCase();
-		String sql = "insert into " + tname+ " (studentId,studentFullName,studentUserName,seen) values(?,?,?,?)";
-		try {
-			PreparedStatement pstm = Db.getDb().prepareStatement(sql);
-			pstm.setInt(1, student.getId());
-			pstm.setString(2, student.getFirstName()+ " " + student.getMiddleName()+ " " + student.getLastName());
-			pstm.setString(3, student.getUserName());
-			pstm.setString(4, "false");
-			pstm.execute();
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		
+		String query = "select studentFullName from " + tname + " where studentId = " + student.getId();
+		try {
+			java.sql.Statement stm = Db.getDb().createStatement();
+			ResultSet rs = stm.executeQuery(query);
+			if(rs.next()) {
+				return false;
+			}else {
+				String sql = "insert into " + tname+ " (studentId,studentFullName,studentUserName,seen) values(?,?,?,?)";
+				try {
+					PreparedStatement pstm = Db.getDb().prepareStatement(sql);
+					pstm.setInt(1, student.getId());
+					pstm.setString(2, student.getFirstName()+ " " + student.getMiddleName()+ " " + student.getLastName());
+					pstm.setString(3, student.getUserName());
+					pstm.setString(4, "false");
+					pstm.execute();
+					return true;
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		return false;
 	}
 }

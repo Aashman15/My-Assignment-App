@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page isELIgnored="false"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,6 +46,24 @@
 			</ul>
 		</div>
 	</nav>
-
+	
+	<div class="container" style="padding:10px;">
+	     <div style="background-color:black; color:white; border-radius:5px; padding:10px;">
+	        <h2>Your all student requests.</h2>
+	        <p>Please try to accept all. Share your knowledge with all! </p>
+	     </div>
+	        <c:forEach items="${allStudentRequests}" var = "sr">
+	           <div style="background-color:skyblue; color:white; margin-top:5px; border-radius:5px; padding:10px;">
+                   <h5>${sr.studentFullName}</h5>
+	               <p>
+	                 <b>More Details:</b><br>
+	                 Student Id: ${sr.studentId}<br>
+	                 Student UserName: ${sr.studentUserName}
+	               </p>
+	               <a href="#"><input class = "btn btn-primary" type="submit" value="add to list"></a>
+                     <hr>
+	           </div>
+	        </c:forEach>
+	</div>
 </body>
 </html>

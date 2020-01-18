@@ -1,5 +1,8 @@
 package com.aashman.myassignmentapp.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +43,9 @@ public class TeacherController {
 
 	@RequestMapping(value = "/enterTeacherHome", method = RequestMethod.POST)
 	public String enterTeacherHome(@RequestParam("username") String username, @RequestParam("password") String password,
-			Model model) {
+			Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.setAttribute("activeTeacher", username);
 		if (teacherService.enterTeacherHomePage(username, password)) {
 			return "TeacherHome";
 		} else {
@@ -48,35 +53,40 @@ public class TeacherController {
 			return "index";
 		}
 	}
-	
-	
+
 	@RequestMapping("/showTeacherHome")
 	public String showTeacherHome() {
 		return "TeacherHome";
 	}
-	
+
 	@RequestMapping("/showTeacherAccount")
 	public String showTeacherAccount() {
 		return "teacher/account";
 	}
-	
+
 	@RequestMapping("/showTeacherAssignments")
 	public String showTeacherAssignments() {
 		return "teacher/assignments";
 	}
-	
-	@RequestMapping("/showTeacherStudentRequests")
+
+	@RequestMapping("/showTeacherNotifications")
 	public String showTeacherStudentRequests() {
-		return "teacher/studentrequests";
+		return "teacher/notifications";
 	}
-	
+
 	@RequestMapping("/showTeacherStudents")
 	public String showTeacherStudents() {
 		return "teacher/students";
 	}
-	
-	@RequestMapping("/showTeacherNotifications")
-	public String showTeacherNotifications() {
-		return "teacher/notifications";
+
+	@RequestMapping("/showTeacherStudentRequests")
+	public String showTeacherNotifications(HttpServletRequest request, Model model) {
+		String dbTableName = (String) request.getSession().getAttribute("activeTeacher") + "sr";
+		if (request.getSession().getAttribute("activeTeacher") == null) {
+			return "index";
+		} else {
+			model.addAttribute("allStudentRequests", teacherService.getAllStudentRequests(dbTableName));
+			return "teacher/studentrequests";
+		}
 	}
 }
