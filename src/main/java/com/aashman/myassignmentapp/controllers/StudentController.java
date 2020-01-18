@@ -1,5 +1,8 @@
 package com.aashman.myassignmentapp.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,18 +16,19 @@ import com.aashman.myassignmentapp.models.Student;
 import com.aashman.myassignmentapp.repos.StudentRepository;
 import com.aashman.myassignmentapp.repos.TeacherRepository;
 import com.aashman.myassignmentapp.service.StudentService;
-import com.aashman.myassignmentapp.service.TeacherService;
 
 @Controller
 public class StudentController {
+
 	@Autowired
 	StudentRepository studentRepository;
+
 	@Autowired
 	StudentService studentService;
-	
+
 	@Autowired
-    TeacherRepository teacherRepository;
-	
+	TeacherRepository teacherRepository;
+
 	@RequestMapping("/studentLogIn")
 	public String showStudentLogIn() {
 		return "login/studentLogIn";
@@ -49,48 +53,53 @@ public class StudentController {
 
 	@RequestMapping(value = "/enterStudentHome", method = RequestMethod.POST)
 	public String logInStudent(@RequestParam("userName") String userName, @RequestParam("password") String password,
-			Model model) {
+			Model model, HttpServletRequest request) {
 		if (studentService.enterStudentHomePage(userName, password)) {
+			HttpSession session = request.getSession();
+			session.setAttribute("student", studentService.findStudentByUserName(userName));
 			return "StudentHome";
 		} else {
 			model.addAttribute("msg", "username or password is incorrect, please try again");
 			return "index";
 		}
 	}
-	
-    @RequestMapping("/showStudentAccountPage")
-	public String showStudentAccount() {
+
+	@RequestMapping("/showStudentAccountPage")
+	public String showStudentAccount(HttpServletRequest studentRequest) {
+		if (studentRequest.getSession().getAttribute("student") == null) {
+			return "index";
+		}
 		return "student/account";
 	}
-    
-    @RequestMapping("/showStudentTeachersPage")
-    public String showStudentTeachers(Model model) {
-    	model.addAttribute("teacher", teacherRepository.findAll());
-    	return "student/teachers";
-    }
-    
-    @RequestMapping("/showStudentAssignmentsPage")
-    public String showStudentAssignments() {
-    	return "student/assignments";
-    }
-    
-    @RequestMapping("/showStudentHome")
-    public String showStudentHome() {
-    	return "StudentHome";
-    }
+
+	@RequestMapping("/showStudentTeachersPage")
+	public String showStudentTeachers(Model model, HttpServletRequest studentRequest) {
+		if (studentRequest.getSession().getAttribute("student") == null) {
+			return "index";
+		}
+		model.addAttribute("teacher", teacherRepository.findAll());
+		return "student/teachers";
+	}
+
+	@RequestMapping("/showStudentAssignmentsPage")
+	public String showStudentAssignments(HttpServletRequest studentRequest) {
+		if (studentRequest.getSession().getAttribute("student") == null) {
+			return "index";
+		}
+		return "student/assignments";
+	}
+
+	@RequestMapping("/showStudentHome")
+	public String showStudentHome(HttpServletRequest studentRequest) {
+		if (studentRequest.getSession().getAttribute("student") == null) {
+			return "index";
+		}
+		return "StudentHome";
+	}
+
+	@RequestMapping("/logOut")
+	public String logOut(HttpServletRequest request) {
+		request.getSession().invalidate();
+		return "index";
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

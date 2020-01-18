@@ -24,8 +24,8 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link"
-					href="showStudentHome">Home </a></li>
+				<li class="nav-item"><a class="nav-link" href="showStudentHome">Home
+				</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="showStudentAssignmentsPage">Assignments</a></li>
 				<li class="nav-item"><a class="nav-link"
@@ -34,9 +34,26 @@
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link active"
 					href="showStudentAccountPage">Account</a></li>
-				<li class="nav-item"><a class="nav-link" href="showIndex">Log Out</a></li>
+				<li class="nav-item"><a class="nav-link" href="logOut">Log
+						Out</a></li>
 			</ul>
 		</div>
 	</nav>
+
+	<div class="container" style="margin-top: 5px;">
+		<div style="background-color: skyblue; color: white;">
+			<h2>Your Account Details:</h2>
+		</div>
+		<h4>FirstName: ${student.firstName}</h4>
+		<h4>MiddleName: ${student.middleName}</h4>
+		<h4>LastName: ${student.lastName}</h4>
+		<h4>address: ${student.address}</h4>
+		<h4>PhoneNumber: ${student.phoneNumber}</h4>
+		<h4>Birthday: ${student.dob}</h4>
+		<h4>Gender:${student.gender}</h4>
+		<h4>UserName: ${student.userName}</h4>
+		<h4>Password: ${student.password}</h4>
+		<a href="#">Edit Account (not available for now)</a>
+	</div>
 </body>
 </html>

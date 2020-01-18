@@ -30,7 +30,7 @@ public class TeacherController {
 	@Transactional
 	public String registerStudent(@ModelAttribute Teacher teacher, Model model) {
 		if (teacherService.addTeacher(teacher)) {
-			model.addAttribute("message","Sign Up Sucessfully,Click Log In To Log In.");
+			model.addAttribute("message", "Sign Up Sucessfully,Click Log In To Log In.");
 			return "login/teacherSignUp";
 		} else {
 			model.addAttribute("msg", "Please fill the boxes.");
