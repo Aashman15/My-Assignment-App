@@ -50,6 +50,8 @@
 		</div>
 	</nav>
 	<div class="container">
+	<p style="color:green;"> ${requestSentMsg} </p>
+	<p style="color:red;"> ${errorsendingrequest} </p>
 	<div style="color:skyblue; margin-left:20%;">
 	   <h2>All Teachers &nbsp &nbsp<a href="#" style="font-size:11px;">view my teachers</a></h2>
 	</div>
@@ -64,7 +66,7 @@
 					<td>${teacher.firstName}${teacher.middleName}
 						${teacher.lastName}</td>
 					<td>${teacher.phoneNumber}</td>
-					<td style="font-size:16px;"><a href="#">Be ${teacher.firstName}'s Student</a></td>
+					<td style="font-size:16px;"><a href="sendRequest?dbTableName=${teacher.userName}sr&studentUserName=${student.userName}">Be ${teacher.firstName}'s Student</a></td>
 				</tr>
 			</c:forEach>
 		</table>

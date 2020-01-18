@@ -33,7 +33,7 @@ public class TeacherController {
 			model.addAttribute("message", "Sign Up Sucessfully,Click Log In To Log In.");
 			return "login/teacherSignUp";
 		} else {
-			model.addAttribute("msg", "Please fill the boxes.");
+			model.addAttribute("msg", "Please try again something went wrong");
 			return "login/teacherSignUp";
 		}
 	}

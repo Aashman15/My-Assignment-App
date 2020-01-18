@@ -110,4 +110,17 @@ public class StudentController {
 		request.getSession().invalidate();
 		return "index";
 	}
+	
+	@RequestMapping("/sendRequest")
+	@Transactional
+	public String sendRequestToTeacher(@RequestParam("dbTableName") String dbTableName,@RequestParam("studentUserName") String userName,Model model) {
+		Student s = studentService.findStudentByUserName(userName);
+		if(studentService.addStudentRequest(dbTableName, s)) {
+		model.addAttribute("requestSentMsg", "Request has been sent ! wait for the response.");
+		}else {
+			model.addAttribute("errorsendingrequest","Something went wrong or you may have already sent.");
+		}
+		model.addAttribute("teacher", teacherRepository.findAll());
+		return "student/teachers";
+	}
 }

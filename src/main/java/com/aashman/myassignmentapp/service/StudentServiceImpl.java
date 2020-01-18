@@ -1,10 +1,13 @@
 package com.aashman.myassignmentapp.service;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.aashman.myassignmentapp.db.Db;
 import com.aashman.myassignmentapp.models.Student;
 import com.aashman.myassignmentapp.repos.StudentRepository;
 
@@ -46,5 +49,24 @@ public class StudentServiceImpl implements StudentService {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public boolean addStudentRequest(String dbTableName, Student student) {
+		String tname = dbTableName.toLowerCase();
+		String sql = "insert into " + tname+ " (studentId,studentFullName,studentUserName,seen) values(?,?,?,?)";
+		try {
+			PreparedStatement pstm = Db.getDb().prepareStatement(sql);
+			pstm.setInt(1, student.getId());
+			pstm.setString(2, student.getFirstName()+ " " + student.getMiddleName()+ " " + student.getLastName());
+			pstm.setString(3, student.getUserName());
+			pstm.setString(4, "false");
+			pstm.execute();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 }
