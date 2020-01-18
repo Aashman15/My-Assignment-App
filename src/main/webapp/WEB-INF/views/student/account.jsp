@@ -30,6 +30,9 @@
 					href="showStudentAssignmentsPage">Assignments</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="showStudentTeachersPage">Teachers</a></li>
+					<li class="nav-item"><a class="nav-link"
+					href="showNotificationsPage">Notifications</a></li>
+					
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link active"

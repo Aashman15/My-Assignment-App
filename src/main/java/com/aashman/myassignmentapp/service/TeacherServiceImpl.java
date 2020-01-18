@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.aashman.myassignmentapp.db.Db;
 import com.aashman.myassignmentapp.models.Teacher;
 import com.aashman.myassignmentapp.repos.TeacherRepository;
 
@@ -35,6 +36,17 @@ public class TeacherServiceImpl implements TeacherService {
 				return true;
 			}
 		}
+		return false;
+	}
+
+	@Override
+	public boolean createTable(String username) {
+		Db db = new Db();
+		String sql = "CREATE TABLE dbfor" + username + " ();";
+		
+		
+		
+		
 		return false;
 	}
 	

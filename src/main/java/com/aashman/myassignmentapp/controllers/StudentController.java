@@ -96,6 +96,14 @@ public class StudentController {
 		}
 		return "StudentHome";
 	}
+	
+	@RequestMapping("/showNotificationsPage")
+	public String showNotifications(HttpServletRequest request) {
+		if (request.getSession().getAttribute("student") == null) {
+			return "index";
+		}
+		return "student/notifications";
+	}
 
 	@RequestMapping("/logOut")
 	public String logOut(HttpServletRequest request) {

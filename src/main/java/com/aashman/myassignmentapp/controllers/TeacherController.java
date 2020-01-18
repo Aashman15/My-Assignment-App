@@ -48,4 +48,35 @@ public class TeacherController {
 			return "index";
 		}
 	}
+	
+	
+	@RequestMapping("/showTeacherHome")
+	public String showTeacherHome() {
+		return "TeacherHome";
+	}
+	
+	@RequestMapping("/showTeacherAccount")
+	public String showTeacherAccount() {
+		return "teacher/account";
+	}
+	
+	@RequestMapping("/showTeacherAssignments")
+	public String showTeacherAssignments() {
+		return "teacher/assignments";
+	}
+	
+	@RequestMapping("/showTeacherStudentRequests")
+	public String showTeacherStudentRequests() {
+		return "teacher/studentrequests";
+	}
+	
+	@RequestMapping("/showTeacherStudents")
+	public String showTeacherStudents() {
+		return "teacher/students";
+	}
+	
+	@RequestMapping("/showTeacherNotifications")
+	public String showTeacherNotifications() {
+		return "teacher/notifications";
+	}
 }
