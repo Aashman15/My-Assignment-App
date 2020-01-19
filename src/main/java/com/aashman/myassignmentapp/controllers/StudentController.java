@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.aashman.myassignmentapp.models.Student;
 import com.aashman.myassignmentapp.repos.StudentRepository;
 import com.aashman.myassignmentapp.repos.TeacherRepository;
+import com.aashman.myassignmentapp.service.StudentRequestService;
 import com.aashman.myassignmentapp.service.StudentService;
 
 @Controller
@@ -28,6 +29,9 @@ public class StudentController {
 
 	@Autowired
 	TeacherRepository teacherRepository;
+	
+	@Autowired
+	StudentRequestService studentRequestService;
 
 	@RequestMapping("/studentLogIn")
 	public String showStudentLogIn() {
@@ -112,15 +116,31 @@ public class StudentController {
 	}
 	
 	@RequestMapping("/sendRequest")
-	@Transactional
-	public String sendRequestToTeacher(@RequestParam("dbTableName") String dbTableName,@RequestParam("studentUserName") String userName,Model model) {
-		Student s = studentService.findStudentByUserName(userName);
-		if(studentService.addStudentRequest(dbTableName, s)) {
-		model.addAttribute("requestSentMsg", "Request has been sent ! wait for the response.");
+	public String sendRequestToTeacher(@RequestParam("studentId") int studentId, @RequestParam("teacherId") int teacherId, Model model) {
+		if(studentRequestService.addStudentRequest((Integer)studentId, (Integer)teacherId)) {
+			model.addAttribute("requestSentMsg", "request sent! wait to get response back !");
 		}else {
-			model.addAttribute("errorsendingrequest","Something went wrong or you may have already sent.");
+			model.addAttribute("errorsendingrequest", "Sorry request failed ! May be you have already clicked the link and sent the request!");
 		}
 		model.addAttribute("teacher", teacherRepository.findAll());
 		return "student/teachers";
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

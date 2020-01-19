@@ -66,7 +66,7 @@
 					<td>${teacher.firstName}${teacher.middleName}
 						${teacher.lastName}</td>
 					<td>${teacher.phoneNumber}</td>
-					<td style="font-size:16px;"><a href="sendRequest?dbTableName=${teacher.userName}sr&studentUserName=${student.userName}">Be ${teacher.firstName}'s Student</a></td>
+					<td style="font-size:16px;"><a href="sendRequest?teacherId=${teacher.teacherId}&studentId=${student.studentId}">Be ${teacher.firstName}'s Student</a></td>
 				</tr>
 			</c:forEach>
 		</table>

@@ -54,11 +54,11 @@
 	     </div>
 	        <c:forEach items="${allStudentRequests}" var = "sr">
 	           <div style="background-color:skyblue; color:white; margin-top:5px; border-radius:5px; padding:10px;">
-                   <h5>${sr.studentFullName}</h5>
+                   <h5>${sr.firstName} ${sr.middleName} ${sr.lastName}</h5>
 	               <p>
 	                 <b>More Details:</b><br>
 	                 Student Id: ${sr.studentId}<br>
-	                 Student UserName: ${sr.studentUserName}
+	                 Student UserName: ${sr.userName}
 	               </p>
 	               <a href="#"><input class = "btn btn-primary" type="submit" value="add to list"></a>
                      <hr>

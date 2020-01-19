@@ -1,17 +1,19 @@
 package com.aashman.myassignmentapp.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.ManyToMany;
 
 @Entity
-@Table(name = "student")
 public class Student {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int studentId;
 	private String firstName;
 	private String middleName;
 	private String lastName;
@@ -22,12 +24,23 @@ public class Student {
 	private String userName;
 	private String password;
 
-	public int getId() {
-		return id;
+	@ManyToMany(mappedBy = "student")
+	private List<Teacher> teacher = new ArrayList<Teacher>();
+
+	public List<Teacher> getTeachers() {
+		return teacher;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setTeachersOfAStudent(List<Teacher> teachers) {
+		this.teacher = teachers;
+	}
+
+	public int getStudentId() {
+		return studentId;
+	}
+
+	public void setStudentId(int studentId) {
+		this.studentId = studentId;
 	}
 
 	public String getFirstName() {
@@ -100,6 +113,14 @@ public class Student {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [studentId=" + studentId + ", firstName=" + firstName + ", middleName=" + middleName
+				+ ", lastName=" + lastName + ", address=" + address + ", phoneNumber=" + phoneNumber + ", dob=" + dob
+				+ ", gender=" + gender + ", userName=" + userName + ", password=" + password + ", teacher=" + teacher
+				+ "]";
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.aashman.myassignmentapp.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,13 +13,24 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.aashman.myassignmentapp.models.Student;
 import com.aashman.myassignmentapp.models.Teacher;
+import com.aashman.myassignmentapp.repos.StudentRequestRepository;
+import com.aashman.myassignmentapp.service.StudentRequestService;
 import com.aashman.myassignmentapp.service.TeacherService;
 
 @Controller
 public class TeacherController {
+
 	@Autowired
 	TeacherService teacherService;
+
+	@Autowired
+	StudentRequestRepository srRepository;
+
+	@Autowired
+	StudentRequestService srService;
 
 	@RequestMapping("/teacherLogIn")
 	public String showTeacherLogIn() {
@@ -45,6 +58,7 @@ public class TeacherController {
 	public String enterTeacherHome(@RequestParam("username") String username, @RequestParam("password") String password,
 			Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
+		session.setAttribute("activeTeacher", username);
 		session.setAttribute("activeTeacher", username);
 		if (teacherService.enterTeacherHomePage(username, password)) {
 			return "TeacherHome";
@@ -81,11 +95,20 @@ public class TeacherController {
 
 	@RequestMapping("/showTeacherStudentRequests")
 	public String showTeacherNotifications(HttpServletRequest request, Model model) {
-		String dbTableName = (String) request.getSession().getAttribute("activeTeacher") + "sr";
-		if (request.getSession().getAttribute("activeTeacher") == null) {
+		String username = (String) request.getSession().getAttribute("activeTeacher");
+		System.out.println("Checking UserName");
+		System.out.println(username);
+		Teacher teacher = teacherService.findTeacherByUserName(username);
+		System.out.println("Checking teacher");
+		System.out.println(teacher);
+        List<Student> allStudentRequests = srService.findSrOfActiveTeacher(teacher);
+        System.out.println("Checking lists");
+        System.out.println(allStudentRequests);
+		
+        if (username == null) {
 			return "index";
 		} else {
-			model.addAttribute("allStudentRequests", teacherService.getAllStudentRequests(dbTableName));
+			model.addAttribute("allStudentRequests", allStudentRequests);
 			return "teacher/studentrequests";
 		}
 	}
