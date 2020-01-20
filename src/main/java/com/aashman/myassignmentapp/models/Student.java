@@ -1,7 +1,7 @@
 package com.aashman.myassignmentapp.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,13 +25,13 @@ public class Student {
 	private String password;
 
 	@ManyToMany(mappedBy = "student")
-	private List<Teacher> teacher = new ArrayList<Teacher>();
+	private Set<Teacher> teacher = new HashSet<Teacher>();
 
-	public List<Teacher> getTeachers() {
+	public Set<Teacher> getTeachers() {
 		return teacher;
 	}
 
-	public void setTeachers(List<Teacher> teachers) {
+	public void setTeachers(Set<Teacher> teachers) {
 		this.teacher = teachers;
 	}
 

@@ -70,8 +70,9 @@ table {
 						${teacher.lastName}</td>
 					<td>${teacher.phoneNumber}</td>
 					<td style="font-size: 16px;"><a
-						href="sendRequest?teacherId=${teacher.teacherId}&studentId=${student.studentId}">Be
-							${tea cher.firstName}'s Student</a></td>
+						href="sendRequest?teacherId=${teacher.teacherId}&studentId=${student.studentId}">
+						<input style="width:200px;" type="submit" class = "btn btn-primary" value = "Be ${teacher.firstName}'s Student">
+						</a></td>
 				</tr>
 			</c:forEach>
 		</table>

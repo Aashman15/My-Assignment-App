@@ -100,6 +100,7 @@ public class TeacherController {
 		return "teacher/students";
 	}
 
+	
 	@RequestMapping("/showTeacherStudentRequests")
 	public String showTeacherNotifications(HttpServletRequest request, Model model) {
 		String username = (String) request.getSession().getAttribute("activeTeacher");
