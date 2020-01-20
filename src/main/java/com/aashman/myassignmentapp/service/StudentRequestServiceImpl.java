@@ -57,4 +57,16 @@ public class StudentRequestServiceImpl implements StudentRequestService {
 		}
 		return listOfStudents;
 	}
+
+	@Override
+	public StudentRequest findSrBySid_Tid(String sid_tid) {
+		List<StudentRequest> allSr = repository.findAll();
+		
+		for(StudentRequest sr : allSr) {
+			if(sr.getSidTid().equals(sid_tid)) {
+				return sr;
+			}
+		}
+		return null;
+	}
 }

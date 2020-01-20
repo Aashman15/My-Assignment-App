@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.aashman.myassignmentapp.models.Student;
+import com.aashman.myassignmentapp.models.Teacher;
 import com.aashman.myassignmentapp.repos.StudentRepository;
 import com.aashman.myassignmentapp.repos.TeacherRepository;
 import com.aashman.myassignmentapp.service.StudentRequestService;
@@ -29,7 +30,7 @@ public class StudentController {
 
 	@Autowired
 	TeacherRepository teacherRepository;
-	
+
 	@Autowired
 	StudentRequestService studentRequestService;
 
@@ -100,7 +101,7 @@ public class StudentController {
 		}
 		return "StudentHome";
 	}
-	
+
 	@RequestMapping("/showNotificationsPage")
 	public String showNotifications(HttpServletRequest request) {
 		if (request.getSession().getAttribute("student") == null) {
@@ -114,11 +115,14 @@ public class StudentController {
 		request.getSession().invalidate();
 		return "index";
 	}
-	
+
 	@RequestMapping("/sendRequest")
 	public String sendRequestToTeacher(@RequestParam("studentId") int studentId, @RequestParam("teacherId") int teacherId, Model model) {
+        Teacher teacher = teacherRepository.findById(teacherId).get();
+        
 		if(studentRequestService.addStudentRequest((Integer)studentId, (Integer)teacherId)) {
 			model.addAttribute("requestSentMsg", "request sent! wait to get response back !");
+		    model.addAttribute("beStudent","Be" + teacher.getFirstName() + "'s Student");
 		}else {
 			model.addAttribute("errorsendingrequest", "Sorry request failed ! May be you have already clicked the link and sent the request!");
 		}
@@ -126,21 +130,3 @@ public class StudentController {
 		return "student/teachers";
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

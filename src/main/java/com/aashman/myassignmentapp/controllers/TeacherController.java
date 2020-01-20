@@ -17,11 +17,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.aashman.myassignmentapp.models.Student;
 import com.aashman.myassignmentapp.models.Teacher;
 import com.aashman.myassignmentapp.repos.StudentRequestRepository;
+import com.aashman.myassignmentapp.repos.TeacherRepository;
 import com.aashman.myassignmentapp.service.StudentRequestService;
+import com.aashman.myassignmentapp.service.StudentService;
 import com.aashman.myassignmentapp.service.TeacherService;
 
 @Controller
 public class TeacherController {
+
+	@Autowired
+	TeacherRepository teacherRepository;
 
 	@Autowired
 	TeacherService teacherService;
@@ -31,6 +36,9 @@ public class TeacherController {
 
 	@Autowired
 	StudentRequestService srService;
+
+	@Autowired
+	StudentService studentService;
 
 	@RequestMapping("/teacherLogIn")
 	public String showTeacherLogIn() {
@@ -58,7 +66,6 @@ public class TeacherController {
 	public String enterTeacherHome(@RequestParam("username") String username, @RequestParam("password") String password,
 			Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		session.setAttribute("activeTeacher", username);
 		session.setAttribute("activeTeacher", username);
 		if (teacherService.enterTeacherHomePage(username, password)) {
 			return "TeacherHome";
@@ -96,20 +103,31 @@ public class TeacherController {
 	@RequestMapping("/showTeacherStudentRequests")
 	public String showTeacherNotifications(HttpServletRequest request, Model model) {
 		String username = (String) request.getSession().getAttribute("activeTeacher");
-		System.out.println("Checking UserName");
-		System.out.println(username);
 		Teacher teacher = teacherService.findTeacherByUserName(username);
-		System.out.println("Checking teacher");
-		System.out.println(teacher);
-        List<Student> allStudentRequests = srService.findSrOfActiveTeacher(teacher);
-        System.out.println("Checking lists");
-        System.out.println(allStudentRequests);
-		
-        if (username == null) {
+		List<Student> allStudentRequests = srService.findSrOfActiveTeacher(teacher);
+
+		if (username == null) {
 			return "index";
 		} else {
 			model.addAttribute("allStudentRequests", allStudentRequests);
 			return "teacher/studentrequests";
 		}
+	}
+
+	@RequestMapping("/addStudentToList")
+	@Transactional
+	public String addStudentToList(@RequestParam("studentId") int studentId,
+			@RequestParam("activeTeacher") String teacherUserName, Model model, HttpServletRequest request) {
+		Teacher teacher = teacherService.findTeacherByUserName(teacherUserName);
+		Student student = studentService.findStudentByIntegerId(studentId);
+		List<Student> allStudentRequests = srService.findSrOfActiveTeacher(teacher);
+		if (teacherService.addStudentToList(student, teacherUserName, teacher) && student.getTeachers().add(teacher)) {
+			allStudentRequests = srService.findSrOfActiveTeacher(teacher);
+			model.addAttribute("allStudentRequests", allStudentRequests);
+			model.addAttribute("studentAddedMessage", "Student added!");
+			return "teacher/studentrequests";
+		}
+		model.addAttribute("allStudentRequests", allStudentRequests);
+		return "teacher/studentrequests";
 	}
 }

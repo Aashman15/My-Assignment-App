@@ -15,11 +15,11 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-	
+
 <style>
-   table{
-   font-size:150%;
-   }
+table {
+	font-size: 150%;
+}
 </style>
 </head>
 <body>
@@ -38,7 +38,7 @@
 					href="showStudentAssignmentsPage">Assignments</a></li>
 				<li class="nav-item active"><a class="nav-link"
 					href="showStudentTeachersPage">Teachers</a></li>
-					<li class="nav-item"><a class="nav-link"
+				<li class="nav-item"><a class="nav-link"
 					href="showNotificationsPage">Notifications</a></li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
@@ -50,15 +50,18 @@
 		</div>
 	</nav>
 	<div class="container">
-	<p style="color:green;"> ${requestSentMsg} </p>
-	<p style="color:red;"> ${errorsendingrequest} </p>
-	<div style="color:skyblue; margin-left:20%;">
-	   <h2>All Teachers &nbsp &nbsp<a href="#" style="font-size:11px;">view my teachers</a></h2>
-	</div>
+		<p style="color: green;">${requestSentMsg}</p>
+		<p style="color: red;">${errorsendingrequest}</p>
+		<div style="color: skyblue; margin-left: 20%;">
+			<h2>
+				All Teachers &nbsp &nbsp<a href="#" style="font-size: 11px;">view
+					my teachers</a>
+			</h2>
+		</div>
 		<table>
-			<tr style="background-color:skyblue; font-size:150%;">
-				<th style="width:50%;">Full Name</th>
-				<th style="width:30%;">Number</th>
+			<tr style="background-color: skyblue; font-size: 150%;">
+				<th style="width: 50%;">Full Name</th>
+				<th style="width: 30%;">Number</th>
 				<th></th>
 			</tr>
 			<c:forEach items="${teacher}" var="teacher">
@@ -66,7 +69,9 @@
 					<td>${teacher.firstName}${teacher.middleName}
 						${teacher.lastName}</td>
 					<td>${teacher.phoneNumber}</td>
-					<td style="font-size:16px;"><a href="sendRequest?teacherId=${teacher.teacherId}&studentId=${student.studentId}">Be ${teacher.firstName}'s Student</a></td>
+					<td style="font-size: 16px;"><a
+						href="sendRequest?teacherId=${teacher.teacherId}&studentId=${student.studentId}">Be
+							${tea cher.firstName}'s Student</a></td>
 				</tr>
 			</c:forEach>
 		</table>

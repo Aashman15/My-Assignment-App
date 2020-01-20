@@ -27,14 +27,6 @@ public class Teacher {
 	@ManyToMany
 	private List<Student> student = new ArrayList<Student>();
 
-	public List<Student> getStudentsOfATeacher() {
-		return student;
-	}
-
-	public void setStudentsOfATeacher(List<Student> studentsOfATeacher) {
-		this.student = studentsOfATeacher;
-	}
-
 	public int getTeacherId() {
 		return teacherId;
 	}

@@ -31,7 +31,7 @@ public class Student {
 		return teacher;
 	}
 
-	public void setTeachersOfAStudent(List<Teacher> teachers) {
+	public void setTeachers(List<Teacher> teachers) {
 		this.teacher = teachers;
 	}
 
