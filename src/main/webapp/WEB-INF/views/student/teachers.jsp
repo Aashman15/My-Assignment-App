@@ -39,7 +39,7 @@ table {
 				<li class="nav-item active"><a class="nav-link"
 					href="showStudentTeachersPage">Teachers</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="showNotificationsPage">Notifications</a></li>
+					href="showNotificationsPage?studentId=${student.studentId}">Notifications</a></li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link"

@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.aashman.myassignmentapp.models.NotificationOfStudent;
 import com.aashman.myassignmentapp.models.Student;
 import com.aashman.myassignmentapp.models.StudentRequest;
 import com.aashman.myassignmentapp.models.Teacher;
+import com.aashman.myassignmentapp.repos.NotificationOfStudentRepository;
 import com.aashman.myassignmentapp.repos.StudentRequestRepository;
 import com.aashman.myassignmentapp.repos.TeacherRepository;
 
@@ -23,6 +25,9 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Autowired
 	StudentRequestRepository srRepository;
+
+	@Autowired
+	NotificationOfStudentRepository nosRepository;
 
 	@Transactional
 	@Override
@@ -60,12 +65,23 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
+	@Transactional
 	public boolean addStudentToList(Student student, String teacherUserName, Teacher teacher) {
 		int teacherId = teacher.getTeacherId();
 		String sid_tid = Integer.toString(student.getStudentId()) + Integer.toString(teacherId);
 		StudentRequest sr = srService.findSrBySid_Tid(sid_tid);
+
+		String notification = "Teacher: " + teacher.getFirstName()
+				+ "  have accepted your request! You are his student from now."
+				+ " Enjoy his assignments. Make your future bright.";
+		NotificationOfStudent nos = new NotificationOfStudent();
+		nos.setStudentId(student.getStudentId());
+		nos.setNotification(notification);
+
+		nosRepository.save(nos);
 		srRepository.delete(sr);
 		teacher.getStudent().add(student);
+
 		return true;
 	}
 }

@@ -1,5 +1,7 @@
 package com.aashman.myassignmentapp.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.aashman.myassignmentapp.models.NotificationOfStudent;
 import com.aashman.myassignmentapp.models.Student;
 import com.aashman.myassignmentapp.models.Teacher;
 import com.aashman.myassignmentapp.repos.StudentRepository;
 import com.aashman.myassignmentapp.repos.TeacherRepository;
+import com.aashman.myassignmentapp.service.NotificationOfStudentService;
 import com.aashman.myassignmentapp.service.StudentRequestService;
 import com.aashman.myassignmentapp.service.StudentService;
 
@@ -33,6 +37,9 @@ public class StudentController {
 
 	@Autowired
 	StudentRequestService studentRequestService;
+
+	@Autowired
+	NotificationOfStudentService nosService;
 
 	@RequestMapping("/studentLogIn")
 	public String showStudentLogIn() {
@@ -103,9 +110,15 @@ public class StudentController {
 	}
 
 	@RequestMapping("/showNotificationsPage")
-	public String showNotifications(HttpServletRequest request) {
+	public String showNotifications(HttpServletRequest request, @RequestParam("studentId") int studentId, Model model) {
+		List<NotificationOfStudent> nos = nosService.getNotificationsOfAStudent(studentId);
 		if (request.getSession().getAttribute("student") == null) {
 			return "index";
+		}
+		if (nos.equals(null)) {
+			model.addAttribute("noNos", "You donot have any notifications yet!");
+		} else {
+			model.addAttribute("nos", nos);
 		}
 		return "student/notifications";
 	}
@@ -117,14 +130,16 @@ public class StudentController {
 	}
 
 	@RequestMapping("/sendRequest")
-	public String sendRequestToTeacher(@RequestParam("studentId") int studentId, @RequestParam("teacherId") int teacherId, Model model) {
-        Teacher teacher = teacherRepository.findById(teacherId).get();
-        
-		if(studentRequestService.addStudentRequest((Integer)studentId, (Integer)teacherId)) {
+	public String sendRequestToTeacher(@RequestParam("studentId") int studentId,
+			@RequestParam("teacherId") int teacherId, Model model) {
+		Teacher teacher = teacherRepository.findById(teacherId).get();
+
+		if (studentRequestService.addStudentRequest((Integer) studentId, (Integer) teacherId)) {
 			model.addAttribute("requestSentMsg", "request sent! wait to get response back !");
-		    model.addAttribute("beStudent","Be" + teacher.getFirstName() + "'s Student");
-		}else {
-			model.addAttribute("errorsendingrequest", "Sorry request failed ! May be you have already clicked the link and sent the request!");
+			model.addAttribute("beStudent", "Be" + teacher.getFirstName() + "'s Student");
+		} else {
+			model.addAttribute("errorsendingrequest",
+					"Sorry request failed ! May be you have already clicked the link and sent the request!");
 		}
 		model.addAttribute("teacher", teacherRepository.findAll());
 		return "student/teachers";
