@@ -16,9 +16,10 @@
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-<style>
-table {
-	font-size: 150%;
+<style type="text/css">
+.sentRequests {
+	margin-left: 450px;
+	margin-top:-125px;
 }
 </style>
 </head>
@@ -50,32 +51,52 @@ table {
 		</div>
 	</nav>
 	<div class="container">
-		<p style="color: green;">${requestSentMsg}</p>
-		<p style="color: red;">${errorsendingrequest}</p>
-		<div style="color: skyblue; margin-left: 20%;">
-			<h2>
-				All Teachers &nbsp &nbsp<a href="#" style="font-size: 11px;">view
-					my teachers</a>
-			</h2>
-		</div>
-		<table>
-			<tr style="background-color: skyblue; font-size: 150%;">
-				<th style="width: 50%;">Full Name</th>
-				<th style="width: 30%;">Number</th>
-				<th></th>
-			</tr>
-			<c:forEach items="${teacher}" var="teacher">
-				<tr>
-					<td>${teacher.firstName}${teacher.middleName}
-						${teacher.lastName}</td>
-					<td>${teacher.phoneNumber}</td>
-					<td style="font-size: 16px;"><a
-						href="sendRequest?teacherId=${teacher.teacherId}&studentId=${student.studentId}">
-						<input style="width:200px;" type="submit" class = "btn btn-primary" value = "Be ${teacher.firstName}'s Student">
-						</a></td>
+		<div class="availableTeachers">
+			<p style="color: green;">${requestSentMsg}</p>
+			<p style="color: red;">${errorsendingrequest}</p>
+			<div style="color: skyblue;">
+				<h2>Available Teachers</h2>
+			</div>
+			<table>
+				<tr style="background-color: skyblue; font-size: 150%;">
+					<th>Full Name</th>
+					<th>Number</th>
+					<th></th>
 				</tr>
-			</c:forEach>
-		</table>
+				<c:forEach items="${teacher}" var="teacher">
+					<tr>
+						<td>${teacher.firstName}${teacher.middleName}
+							${teacher.lastName}</td>
+						<td>${teacher.phoneNumber}</td>
+						<td style="font-size: 16px;"><a
+							href="sendRequest?teacherId=${teacher.teacherId}&studentId=${student.studentId}">
+								<input style="width: 200px;" type="submit"
+								class="btn btn-primary"
+								value="Be ${teacher.firstName}'s Student">
+						</a></td>
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
+
+		<div class="sentRequests">
+		<div style="color: skyblue;">
+				<h2>Sent Requests</h2>
+			</div>
+			<table>
+				<tr style="background-color: skyblue; font-size: 150%;">
+					<th>Full Name</th>
+					<th>Number</th>
+					<th></th>
+				</tr>
+
+				<tr>
+					<td>${sentSr.firstName}${sentSr.middleName}
+						${sentSr.lastName}</td>
+					<td>${sentSr.phoneNumber}</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 </body>
 </html>

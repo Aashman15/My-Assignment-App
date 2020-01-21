@@ -10,6 +10,7 @@ import com.aashman.myassignmentapp.models.Student;
 import com.aashman.myassignmentapp.models.StudentRequest;
 import com.aashman.myassignmentapp.models.Teacher;
 import com.aashman.myassignmentapp.repos.StudentRequestRepository;
+import com.aashman.myassignmentapp.repos.TeacherRepository;
 
 @Service
 public class StudentRequestServiceImpl implements StudentRequestService {
@@ -19,6 +20,12 @@ public class StudentRequestServiceImpl implements StudentRequestService {
 
 	@Autowired
 	StudentService sService;
+
+	@Autowired
+	TeacherService tService;
+
+	@Autowired
+	TeacherRepository tRepository;
 
 	@Override
 	public boolean addStudentRequest(int studentId, int teacherId) {
@@ -61,12 +68,34 @@ public class StudentRequestServiceImpl implements StudentRequestService {
 	@Override
 	public StudentRequest findSrBySid_Tid(String sid_tid) {
 		List<StudentRequest> allSr = repository.findAll();
-		
-		for(StudentRequest sr : allSr) {
-			if(sr.getSidTid().equals(sid_tid)) {
+
+		for (StudentRequest sr : allSr) {
+			if (sr.getSidTid().equals(sid_tid)) {
 				return sr;
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public List<StudentRequest> findSentRequestsOfAStudent(int studentId) {
+		List<StudentRequest> allSr = repository.findAll();
+		List<StudentRequest> sentSr = new ArrayList<StudentRequest>();
+		for (StudentRequest sr : allSr) {
+			if (sr.getStudentId() == studentId) {
+				sentSr.add(sr);
+			}
+		}
+		return sentSr;
+	}
+
+	@Override
+	public List<Teacher> findSentTeachersOfAStudent(List<StudentRequest> sr) {
+		List<Teacher> teachers = new ArrayList<Teacher>();
+		for (StudentRequest sentRequest : sr) {
+			Teacher t = tRepository.findById(sentRequest.getTeacherId()).get();
+			teachers.add(t);
+		}
+		return teachers;
 	}
 }

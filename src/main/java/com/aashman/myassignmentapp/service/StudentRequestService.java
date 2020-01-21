@@ -10,4 +10,8 @@ public interface StudentRequestService {
 	boolean addStudentRequest(int studentId, int teacherId);
 	List<Student> findSrOfActiveTeacher(Teacher teacher);
 	StudentRequest findSrBySid_Tid(String sid_tid);
+	
+	List<StudentRequest> findSentRequestsOfAStudent(int studentId);
+	
+	List<Teacher> findSentTeachersOfAStudent(List<StudentRequest> sr);
 }

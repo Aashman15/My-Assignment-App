@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.aashman.myassignmentapp.models.NotificationOfStudent;
 import com.aashman.myassignmentapp.models.Student;
+import com.aashman.myassignmentapp.models.StudentRequest;
 import com.aashman.myassignmentapp.models.Teacher;
 import com.aashman.myassignmentapp.repos.StudentRepository;
 import com.aashman.myassignmentapp.repos.TeacherRepository;
@@ -89,7 +90,19 @@ public class StudentController {
 		if (studentRequest.getSession().getAttribute("student") == null) {
 			return "index";
 		}
+		
 		model.addAttribute("teacher", teacherRepository.findAll());
+		Student student = (Student) studentRequest.getSession().getAttribute("student");
+		System.out.println(student);
+		List<StudentRequest> srs = studentRequestService.findSentRequestsOfAStudent(student.getStudentId());
+		System.out.println(srs);
+		List<Teacher> sentSr = studentRequestService.findSentTeachersOfAStudent(srs);
+		System.out.println(sentSr);
+		if(srs.size() == 0  || sentSr.size() == 0) {
+			//model.addAttribute("teacher", teacherRepository.findAll());
+			return "student/teachers";
+		}
+		model.addAttribute("sentSr", sentSr);
 		return "student/teachers";
 	}
 
