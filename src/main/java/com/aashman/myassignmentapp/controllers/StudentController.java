@@ -1,6 +1,7 @@
 package com.aashman.myassignmentapp.controllers;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -87,22 +88,26 @@ public class StudentController {
 
 	@RequestMapping("/showStudentTeachersPage")
 	public String showStudentTeachers(Model model, HttpServletRequest studentRequest) {
+
 		if (studentRequest.getSession().getAttribute("student") == null) {
 			return "index";
 		}
-		
+
 		model.addAttribute("teacher", teacherRepository.findAll());
+
 		Student student = (Student) studentRequest.getSession().getAttribute("student");
-		System.out.println(student);
 		List<StudentRequest> srs = studentRequestService.findSentRequestsOfAStudent(student.getStudentId());
-		System.out.println(srs);
 		List<Teacher> sentSr = studentRequestService.findSentTeachersOfAStudent(srs);
-		System.out.println(sentSr);
-		if(srs.size() == 0  || sentSr.size() == 0) {
-			//model.addAttribute("teacher", teacherRepository.findAll());
-			return "student/teachers";
-		}
+
+		Student s = (Student) studentRequest.getSession().getAttribute("student");
+
+		List<Teacher> availableTeachers = studentService
+				.findAvailableTeachersOfStudent(studentService.findStudentByIntegerId(s.getStudentId()));
+		model.addAttribute("teacher", availableTeachers);
 		model.addAttribute("sentSr", sentSr);
+		Set<Teacher> ownTeachers = s.getTeachers();
+		System.out.println(ownTeachers);
+		model.addAttribute("ownTeachers", ownTeachers);
 		return "student/teachers";
 	}
 
@@ -144,7 +149,7 @@ public class StudentController {
 
 	@RequestMapping("/sendRequest")
 	public String sendRequestToTeacher(@RequestParam("studentId") int studentId,
-			@RequestParam("teacherId") int teacherId, Model model) {
+			@RequestParam("teacherId") int teacherId, Model model, HttpServletRequest request) {
 		Teacher teacher = teacherRepository.findById(teacherId).get();
 
 		if (studentRequestService.addStudentRequest((Integer) studentId, (Integer) teacherId)) {
@@ -154,7 +159,16 @@ public class StudentController {
 			model.addAttribute("errorsendingrequest",
 					"Sorry request failed ! May be you have already clicked the link and sent the request!");
 		}
-		model.addAttribute("teacher", teacherRepository.findAll());
+		List<Teacher> availableTeachers = studentService
+				.findAvailableTeachersOfStudent(studentService.findStudentByIntegerId(studentId));
+		model.addAttribute("teacher", availableTeachers);
+		Student student = (Student) request.getSession().getAttribute("student");
+		List<StudentRequest> srs = studentRequestService.findSentRequestsOfAStudent(student.getStudentId());
+		List<Teacher> sentSr = studentRequestService.findSentTeachersOfAStudent(srs);
+		model.addAttribute("sentSr", sentSr);
+		Set<Teacher> ownTeachers = student.getTeachers();
+		model.addAttribute("ownTeachers", ownTeachers);
+
 		return "student/teachers";
 	}
 }

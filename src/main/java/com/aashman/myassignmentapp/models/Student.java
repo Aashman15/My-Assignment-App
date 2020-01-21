@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +25,7 @@ public class Student {
 	private String userName;
 	private String password;
 
-	@ManyToMany(mappedBy = "student")
+	@ManyToMany(mappedBy = "student", fetch = FetchType.EAGER)
 	private Set<Teacher> teacher = new HashSet<Teacher>();
 
 	public Set<Teacher> getTeachers() {
@@ -114,13 +115,4 @@ public class Student {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	@Override
-	public String toString() {
-		return "Student [studentId=" + studentId + ", firstName=" + firstName + ", middleName=" + middleName
-				+ ", lastName=" + lastName + ", address=" + address + ", phoneNumber=" + phoneNumber + ", dob=" + dob
-				+ ", gender=" + gender + ", userName=" + userName + ", password=" + password + ", teacher=" + teacher
-				+ "]";
-	}
-
 }

@@ -34,7 +34,7 @@ public class TeacherServiceImpl implements TeacherService {
 	public boolean addTeacher(Teacher teacher) {
 		if (teacher.getFirstName().isEmpty() || teacher.getLastName().isEmpty() || teacher.getAddress().isEmpty()
 				|| teacher.getPhoneNumber().isEmpty() || teacher.getDob().isEmpty()
-				|| teacher.getGender().toString().isBlank() || teacher.getUserName().isEmpty()
+				|| teacher.getGender().toString().isEmpty() || teacher.getUserName().isEmpty()
 				|| teacher.getPassword().isEmpty()) {
 			return false;
 		}

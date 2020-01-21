@@ -16,12 +16,6 @@
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-<style type="text/css">
-.sentRequests {
-	margin-left: 450px;
-	margin-top:-125px;
-}
-</style>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -51,51 +45,68 @@
 		</div>
 	</nav>
 	<div class="container">
-		<div class="availableTeachers">
-			<p style="color: green;">${requestSentMsg}</p>
-			<p style="color: red;">${errorsendingrequest}</p>
-			<div style="color: skyblue;">
-				<h2>Available Teachers</h2>
-			</div>
-			<table>
-				<tr style="background-color: skyblue; font-size: 150%;">
-					<th>Full Name</th>
-					<th>Number</th>
-					<th></th>
-				</tr>
-				<c:forEach items="${teacher}" var="teacher">
-					<tr>
-						<td>${teacher.firstName}${teacher.middleName}
-							${teacher.lastName}</td>
-						<td>${teacher.phoneNumber}</td>
-						<td style="font-size: 16px;"><a
-							href="sendRequest?teacherId=${teacher.teacherId}&studentId=${student.studentId}">
-								<input style="width: 200px;" type="submit"
-								class="btn btn-primary"
-								value="Be ${teacher.firstName}'s Student">
-						</a></td>
+		<p style="color: green;">${requestSentMsg}</p>
+		<p style="color: red;">${errorsendingrequest}</p>
+		<div class="row">
+			<div class="col-sm">
+				<div style="color: skyblue;">
+					<h2>Available Teachers</h2>
+				</div>
+				<table>
+					<tr style="background-color: skyblue; font-size: 150%;">
+						<th>Full Name</th>
+						<th>Number</th>
+						<th></th>
 					</tr>
-				</c:forEach>
-			</table>
-		</div>
-
-		<div class="sentRequests">
-		<div style="color: skyblue;">
-				<h2>Sent Requests</h2>
+					<c:forEach items="${teacher}" var="teacher">
+						<tr>
+							<td>${teacher.firstName}${teacher.middleName}
+								${teacher.lastName}</td>
+							<td>${teacher.phoneNumber}</td>
+							<td style="font-size: 16px;"><a
+								href="sendRequest?teacherId=${teacher.teacherId}&studentId=${student.studentId}">
+									<input style="width: 200px;" type="submit"
+									class="btn btn-primary"
+									value="Be ${teacher.firstName}'s Student">
+							</a></td>
+						</tr>
+					</c:forEach>
+				</table>
 			</div>
-			<table>
-				<tr style="background-color: skyblue; font-size: 150%;">
-					<th>Full Name</th>
-					<th>Number</th>
-					<th></th>
-				</tr>
-
-				<tr>
-					<td>${sentSr.firstName}${sentSr.middleName}
-						${sentSr.lastName}</td>
-					<td>${sentSr.phoneNumber}</td>
-				</tr>
-			</table>
+			<div class="col-sm">
+				<div style="color: skyblue;">
+					<h2>Sent Requests</h2>
+				</div>
+				<table>
+					<tr style="background-color: skyblue; font-size: 150%;">
+						<th>Full Name</th>
+						<th>Number</th>
+					</tr>
+					<c:forEach items="${sentSr}" var="ssr">
+						<tr>
+							<td>${ssr.firstName}${ssr.middleName}${ssr.lastName}</td>
+							<td>${ssr.phoneNumber}</td>
+						</tr>
+					</c:forEach>
+				</table>
+			</div>
+			<div class="col-sm">
+				<div style="color: skyblue;">
+					<h2>Your Own Teachers</h2>
+				</div>
+				<table>
+					<tr style="background-color: skyblue; font-size: 150%;">
+						<th>Full Name</th>
+						<th>Number</th>
+					</tr>
+					<c:forEach items="${ownTeachers}" var="ot">
+						<tr>
+							<td>${ot.firstName}${ot.middleName}${ot.lastName}</td>
+							<td>${ot.phoneNumber}</td>
+						</tr>
+					</c:forEach>
+				</table>
+			</div>
 		</div>
 	</div>
 </body>
