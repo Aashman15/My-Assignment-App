@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,9 +14,9 @@
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body background="images/pfth.png">
 
- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<a class="navbar-brand" href="#">Grihakarya</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
@@ -31,15 +31,16 @@
 					href="showTeacherAssignments">Assignments</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="showTeacherStudents">Students</a></li>
-					<li class="nav-item"><a class="nav-link"
+				<li class="nav-item"><a class="nav-link"
 					href="showTeacherNotifications">Notifications</a></li>
-					<li class="nav-item"><a class="nav-link"
+				<li class="nav-item"><a class="nav-link"
 					href="showTeacherStudentRequests">Student Requests</a></li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link"
 					href="showTeacherAccount">Account</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Log Out</a></li>
+				<li class="nav-item"><a class="nav-link" href="logOutTeacher">Log
+						Out</a></li>
 			</ul>
 		</div>
 	</nav>

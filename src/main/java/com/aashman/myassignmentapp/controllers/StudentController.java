@@ -98,15 +98,12 @@ public class StudentController {
 		Student student = (Student) studentRequest.getSession().getAttribute("student");
 		List<StudentRequest> srs = studentRequestService.findSentRequestsOfAStudent(student.getStudentId());
 		List<Teacher> sentSr = studentRequestService.findSentTeachersOfAStudent(srs);
-
 		Student s = (Student) studentRequest.getSession().getAttribute("student");
-
 		List<Teacher> availableTeachers = studentService
 				.findAvailableTeachersOfStudent(studentService.findStudentByIntegerId(s.getStudentId()));
 		model.addAttribute("teacher", availableTeachers);
 		model.addAttribute("sentSr", sentSr);
 		Set<Teacher> ownTeachers = s.getTeachers();
-		System.out.println(ownTeachers);
 		model.addAttribute("ownTeachers", ownTeachers);
 		return "student/teachers";
 	}

@@ -1,6 +1,7 @@
 package com.aashman.myassignmentapp.controllers;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -76,40 +77,59 @@ public class TeacherController {
 	}
 
 	@RequestMapping("/showTeacherHome")
-	public String showTeacherHome() {
+	public String showTeacherHome(HttpServletRequest request) {
+		if (request.getSession().getAttribute("activeTeacher") == null) {
+			return "index";
+		}
 		return "TeacherHome";
 	}
 
 	@RequestMapping("/showTeacherAccount")
-	public String showTeacherAccount() {
+	public String showTeacherAccount(HttpServletRequest request,Model model) {
+		String userName = (String)request.getSession().getAttribute("activeTeacher");
+		if (userName== null) {
+			return "index";
+		}
+		model.addAttribute("LoggedInTeacher",teacherService.findTeacherByUserName(userName));
 		return "teacher/account";
 	}
 
 	@RequestMapping("/showTeacherAssignments")
-	public String showTeacherAssignments() {
+	public String showTeacherAssignments(HttpServletRequest request) {
+		if (request.getSession().getAttribute("activeTeacher")== null) {
+			return "index";
+		}
 		return "teacher/assignments";
 	}
 
 	@RequestMapping("/showTeacherNotifications")
-	public String showTeacherStudentRequests() {
+	public String showTeacherStudentRequests(HttpServletRequest request) {
+		if (request.getSession().getAttribute("activeTeacher")== null) {
+			return "index";
+		}
 		return "teacher/notifications";
 	}
 
 	@RequestMapping("/showTeacherStudents")
-	public String showTeacherStudents() {
+	public String showTeacherStudents(HttpServletRequest request, Model model) {
+		String teacherUserName = (String) request.getSession().getAttribute("activeTeacher");
+		if (teacherUserName== null) {
+			return "index";
+		}
+		Teacher teacher = teacherService.findTeacherByUserName(teacherUserName);
+		Set<Student> students = teacher.getStudent();
+		model.addAttribute("studentsOfActiveTeacher", students);
 		return "teacher/students";
 	}
 
-	
 	@RequestMapping("/showTeacherStudentRequests")
 	public String showTeacherNotifications(HttpServletRequest request, Model model) {
 		String username = (String) request.getSession().getAttribute("activeTeacher");
-		Teacher teacher = teacherService.findTeacherByUserName(username);
-		List<Student> allStudentRequests = srService.findSrOfActiveTeacher(teacher);
-
-		if (username == null) {
+		if (username== null) {
 			return "index";
 		} else {
+			List<Student> allStudentRequests = srService
+					.findSrOfActiveTeacher(teacherService.findTeacherByUserName(username));
 			model.addAttribute("allStudentRequests", allStudentRequests);
 			return "teacher/studentrequests";
 		}
@@ -119,6 +139,9 @@ public class TeacherController {
 	@Transactional
 	public String addStudentToList(@RequestParam("studentId") int studentId,
 			@RequestParam("activeTeacher") String teacherUserName, Model model, HttpServletRequest request) {
+		if (request.getSession().getAttribute("activeTeacher")== null) {
+			return "index";
+		}
 		Teacher teacher = teacherService.findTeacherByUserName(teacherUserName);
 		Student student = studentService.findStudentByIntegerId(studentId);
 		List<Student> allStudentRequests = srService.findSrOfActiveTeacher(teacher);
@@ -130,5 +153,11 @@ public class TeacherController {
 		}
 		model.addAttribute("allStudentRequests", allStudentRequests);
 		return "teacher/studentrequests";
+	}
+
+	@RequestMapping("/logOutTeacher")
+	public String logOutTeacher(HttpServletRequest request) {
+		request.getSession().invalidate();
+		return "index";
 	}
 }
