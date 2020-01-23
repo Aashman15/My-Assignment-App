@@ -155,6 +155,12 @@ public class TeacherController {
 		return "teacher/studentrequests";
 	}
 
+	@RequestMapping(value = "/addMcAssignment", method = RequestMethod.POST)
+	public String addMcAssignment() {
+		return null;
+	}
+	
+	
 	@RequestMapping("/logOutTeacher")
 	public String logOutTeacher(HttpServletRequest request) {
 		request.getSession().invalidate();

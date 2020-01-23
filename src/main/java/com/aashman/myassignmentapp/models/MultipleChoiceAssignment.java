@@ -2,12 +2,14 @@ package com.aashman.myassignmentapp.models;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -16,10 +18,12 @@ public class MultipleChoiceAssignment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "mcassignment_id")
 	private int id;
 	private String topic;
-	private List<String> question;
-	private List<String> choice;
+
+	@OneToMany(mappedBy = "mcAssignment")
+	private List<McQuestion> question;
 
 	@ManyToOne
 	@JoinColumn(name = "teacher_id")
@@ -41,20 +45,12 @@ public class MultipleChoiceAssignment {
 		this.topic = topic;
 	}
 
-	public List<String> getQuestion() {
+	public List<McQuestion> getQuestion() {
 		return question;
 	}
 
-	public void setQuestion(List<String> question) {
+	public void setQuestion(List<McQuestion> question) {
 		this.question = question;
-	}
-
-	public List<String> getChoice() {
-		return choice;
-	}
-
-	public void setChoice(List<String> choice) {
-		this.choice = choice;
 	}
 
 	public Teacher getTeacher() {
@@ -64,5 +60,4 @@ public class MultipleChoiceAssignment {
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
 	}
-
 }

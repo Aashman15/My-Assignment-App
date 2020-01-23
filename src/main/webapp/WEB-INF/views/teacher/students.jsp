@@ -49,7 +49,7 @@
 	<div class="container">
 		<div
 			style="background-color: skyblue; color: white; margin-top: 10px; padding: 10px; height: 120%;">
-			<h3>Your Teachers:</h3>
+			<h3>Your Students:</h3>
 		</div>
 		<hr>
 		<div>

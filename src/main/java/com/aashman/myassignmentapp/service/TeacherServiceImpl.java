@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.aashman.myassignmentapp.models.McQuestion;
+import com.aashman.myassignmentapp.models.MultipleChoiceAssignment;
 import com.aashman.myassignmentapp.models.NotificationOfStudent;
 import com.aashman.myassignmentapp.models.Student;
 import com.aashman.myassignmentapp.models.StudentRequest;
 import com.aashman.myassignmentapp.models.Teacher;
+import com.aashman.myassignmentapp.repos.McAssignmentRepository;
 import com.aashman.myassignmentapp.repos.NotificationOfStudentRepository;
 import com.aashman.myassignmentapp.repos.StudentRequestRepository;
 import com.aashman.myassignmentapp.repos.TeacherRepository;
@@ -28,6 +31,9 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Autowired
 	NotificationOfStudentRepository nosRepository;
+	
+	@Autowired
+    McAssignmentRepository mcAssignmentRepository;
 
 	@Transactional
 	@Override
@@ -82,6 +88,15 @@ public class TeacherServiceImpl implements TeacherService {
 		srRepository.delete(sr);
 		teacher.getStudent().add(student);
 
+		return true;
+	}
+
+	@Override
+	public boolean addMcAssignment(List<McQuestion> mcQuestion, String topic, Teacher teacher) {
+		MultipleChoiceAssignment mcAssignment = new MultipleChoiceAssignment();
+		mcAssignment.setQuestion(mcQuestion);
+		mcAssignment.setTopic(topic);
+		mcAssignment.setTeacher(teacher);
 		return true;
 	}
 }

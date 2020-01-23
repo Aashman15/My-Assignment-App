@@ -12,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import net.bytebuddy.implementation.bind.annotation.AllArguments.Assignment;
-
 @Entity
 public class Teacher {
 	@Id
@@ -30,7 +28,7 @@ public class Teacher {
 	private String password;
 	
 	@OneToMany(mappedBy = "teacher")
-	private List<Assignment> assignments;
+	private List<MultipleChoiceAssignment> assignments;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Student> student = new HashSet<Student>();
