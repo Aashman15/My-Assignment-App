@@ -45,6 +45,7 @@
 		</div>
 	</nav>
 	<div class="container">
+		<p style="color: green;">${assignmentcreatedmessage}</p>
 		<p style="color: red;">${notBelong}</p>
 		<p style="color: red;">${doesNotExist}</p>
 		<p style="color: green;">${questionAdded}</p>
@@ -58,11 +59,10 @@
 							multiple choice question.</button>
 					</h5>
 				</div>
-				<div id="collapseOne" class="collapse show"
-					aria-labelledby="headingOne" data-parent="#accordion">
+				<div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+					data-parent="#accordion">
 					<div class="card-body">
 						<form action="addMcAssignment" method="post">
-							<p style="color: green;">${assignmentcreatedmessage}</p>
 							<h5>Enter the topic:</h5>
 							<h5>
 								<input type="text" name="topic" style="width: 627px">
@@ -82,8 +82,8 @@
 							assignment of type multiple choice question.</button>
 					</h5>
 				</div>
-				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-					data-parent="#accordion">
+				<div id="collapseTwo" class="collapse show"
+					aria-labelledby="headingTwo" data-parent="#accordion">
 					<div class="card-body">
 						<form action="insertQuestionsToMc">
 							<h5>

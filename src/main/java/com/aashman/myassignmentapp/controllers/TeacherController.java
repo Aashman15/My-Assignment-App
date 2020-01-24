@@ -1,7 +1,6 @@
 package com.aashman.myassignmentapp.controllers;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -192,30 +191,25 @@ public class TeacherController {
 	}
 
 	@RequestMapping("/insertQuestionsToMc")
-	public String insertQuestionsToMc(@RequestParam("assignmentId") int assignmentId, @ModelAttribute McQuestion mcq,
-			HttpSession session, Model model) {
+	@Transactional
+	public String insertQuestionsToMc(@RequestParam("assignmentId") int assignmentId, HttpSession session, Model model,
+			@ModelAttribute McQuestion mcq) {
 		MultipleChoiceAssignment mcA = mcAssignmentRepository.findById(assignmentId).get();
+		if (mcA == null) {
+			model.addAttribute("doesNotExist", "Assignment does not exist.");
+			return "teacher/assignments";
+		}
 		Teacher t1 = mcA.getTeacher();
-		System.out.println(t1);
 		Teacher t2 = teacherService.findTeacherByUserName((String) session.getAttribute("activeTeacher"));
-		System.out.println(t2);
 		if (t1 != t2) {
 			model.addAttribute("notBelong", "Assignment with id:" + assignmentId + " does not belong to you");
 			return "teacher/assignments";
 		}
-
-		if (mcAService.doesMcAExist(assignmentId) == false) {
-			model.addAttribute("doesNotExist", "Assignment does not exist");
-			return "teacher/assignments";
-		}
-
-		Optional<MultipleChoiceAssignment> multipleChoice = mcAssignmentRepository.findById(assignmentId);
-		if (multipleChoice.isPresent()) {
-			model.addAttribute("questionAdded", "Question added. You can add more.");
-			multipleChoice.get().getQuestion().add(mcq);
-		}
-
+		mcq.setMcAssignment(mcA);
+		mcqRepository.save(mcq);
+		mcA.getQuestion().add(mcq);
+		mcAssignmentRepository.save(mcA);
+		model.addAttribute("questionAdded", "Question added. You can add more.");
 		return "teacher/assignments";
 	}
-
 }

@@ -120,4 +120,18 @@ public class Teacher {
 	public void setStudent(Set<Student> student) {
 		this.student = student;
 	}
+
+	public List<MultipleChoiceAssignment> getAssignments() {
+		return assignments;
+	}
+
+	public void setAssignments(List<MultipleChoiceAssignment> assignments) {
+		this.assignments = assignments;
+	}
+
+	@Override
+	public String toString() {
+		return "Name of the teacher is: " + firstName + " " + lastName;
+	}
+	
 }

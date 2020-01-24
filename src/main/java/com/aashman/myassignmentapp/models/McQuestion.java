@@ -22,7 +22,7 @@ public class McQuestion {
 	private String option4;
 	private String correctOption;
 	@ManyToOne
-	@JoinColumn(name = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "mcassignment_id")
 	private MultipleChoiceAssignment mcAssignment;
 
 	public String getCorrectOption() {
