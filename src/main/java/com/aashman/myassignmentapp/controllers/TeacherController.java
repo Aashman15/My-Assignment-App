@@ -1,6 +1,7 @@
 package com.aashman.myassignmentapp.controllers;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,10 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.aashman.myassignmentapp.models.McQuestion;
+import com.aashman.myassignmentapp.models.MultipleChoiceAssignment;
 import com.aashman.myassignmentapp.models.Student;
 import com.aashman.myassignmentapp.models.Teacher;
+import com.aashman.myassignmentapp.repos.McAssignmentRepository;
+import com.aashman.myassignmentapp.repos.McQuestionsRepository;
 import com.aashman.myassignmentapp.repos.StudentRequestRepository;
 import com.aashman.myassignmentapp.repos.TeacherRepository;
+import com.aashman.myassignmentapp.service.McAssignmentService;
 import com.aashman.myassignmentapp.service.StudentRequestService;
 import com.aashman.myassignmentapp.service.StudentService;
 import com.aashman.myassignmentapp.service.TeacherService;
@@ -40,6 +46,15 @@ public class TeacherController {
 
 	@Autowired
 	StudentService studentService;
+
+	@Autowired
+	McAssignmentRepository mcAssignmentRepository;
+
+	@Autowired
+	McQuestionsRepository mcqRepository;
+
+	@Autowired
+	McAssignmentService mcAService;
 
 	@RequestMapping("/teacherLogIn")
 	public String showTeacherLogIn() {
@@ -85,18 +100,18 @@ public class TeacherController {
 	}
 
 	@RequestMapping("/showTeacherAccount")
-	public String showTeacherAccount(HttpServletRequest request,Model model) {
-		String userName = (String)request.getSession().getAttribute("activeTeacher");
-		if (userName== null) {
+	public String showTeacherAccount(HttpServletRequest request, Model model) {
+		String userName = (String) request.getSession().getAttribute("activeTeacher");
+		if (userName == null) {
 			return "index";
 		}
-		model.addAttribute("LoggedInTeacher",teacherService.findTeacherByUserName(userName));
+		model.addAttribute("LoggedInTeacher", teacherService.findTeacherByUserName(userName));
 		return "teacher/account";
 	}
 
 	@RequestMapping("/showTeacherAssignments")
 	public String showTeacherAssignments(HttpServletRequest request) {
-		if (request.getSession().getAttribute("activeTeacher")== null) {
+		if (request.getSession().getAttribute("activeTeacher") == null) {
 			return "index";
 		}
 		return "teacher/assignments";
@@ -104,7 +119,7 @@ public class TeacherController {
 
 	@RequestMapping("/showTeacherNotifications")
 	public String showTeacherStudentRequests(HttpServletRequest request) {
-		if (request.getSession().getAttribute("activeTeacher")== null) {
+		if (request.getSession().getAttribute("activeTeacher") == null) {
 			return "index";
 		}
 		return "teacher/notifications";
@@ -113,7 +128,7 @@ public class TeacherController {
 	@RequestMapping("/showTeacherStudents")
 	public String showTeacherStudents(HttpServletRequest request, Model model) {
 		String teacherUserName = (String) request.getSession().getAttribute("activeTeacher");
-		if (teacherUserName== null) {
+		if (teacherUserName == null) {
 			return "index";
 		}
 		Teacher teacher = teacherService.findTeacherByUserName(teacherUserName);
@@ -125,7 +140,7 @@ public class TeacherController {
 	@RequestMapping("/showTeacherStudentRequests")
 	public String showTeacherNotifications(HttpServletRequest request, Model model) {
 		String username = (String) request.getSession().getAttribute("activeTeacher");
-		if (username== null) {
+		if (username == null) {
 			return "index";
 		} else {
 			List<Student> allStudentRequests = srService
@@ -139,7 +154,7 @@ public class TeacherController {
 	@Transactional
 	public String addStudentToList(@RequestParam("studentId") int studentId,
 			@RequestParam("activeTeacher") String teacherUserName, Model model, HttpServletRequest request) {
-		if (request.getSession().getAttribute("activeTeacher")== null) {
+		if (request.getSession().getAttribute("activeTeacher") == null) {
 			return "index";
 		}
 		Teacher teacher = teacherService.findTeacherByUserName(teacherUserName);
@@ -155,15 +170,52 @@ public class TeacherController {
 		return "teacher/studentrequests";
 	}
 
-	@RequestMapping(value = "/addMcAssignment", method = RequestMethod.POST)
-	public String addMcAssignment() {
-		return null;
-	}
-	
-	
 	@RequestMapping("/logOutTeacher")
 	public String logOutTeacher(HttpServletRequest request) {
 		request.getSession().invalidate();
 		return "index";
 	}
+
+	@RequestMapping(value = "/addMcAssignment", method = RequestMethod.POST)
+	@Transactional
+	public String addMcAssignment(@ModelAttribute MultipleChoiceAssignment mcAssignment, HttpSession session,
+			Model model) {
+		if (session.getAttribute("activeTeacher") == null) {
+			return "index";
+		}
+		mcAssignment.setTeacher(teacherService.findTeacherByUserName((String) session.getAttribute("activeTeacher")));
+		MultipleChoiceAssignment mcA = mcAssignmentRepository.save(mcAssignment);
+		model.addAttribute("assignmentcreatedmessage",
+				"Assignment created. Please remember your assignment id to insert questions in it. Your Assignment Id: "
+						+ mcA.getId());
+		return "teacher/assignments";
+	}
+
+	@RequestMapping("/insertQuestionsToMc")
+	public String insertQuestionsToMc(@RequestParam("assignmentId") int assignmentId, @ModelAttribute McQuestion mcq,
+			HttpSession session, Model model) {
+		MultipleChoiceAssignment mcA = mcAssignmentRepository.findById(assignmentId).get();
+		Teacher t1 = mcA.getTeacher();
+		System.out.println(t1);
+		Teacher t2 = teacherService.findTeacherByUserName((String) session.getAttribute("activeTeacher"));
+		System.out.println(t2);
+		if (t1 != t2) {
+			model.addAttribute("notBelong", "Assignment with id:" + assignmentId + " does not belong to you");
+			return "teacher/assignments";
+		}
+
+		if (mcAService.doesMcAExist(assignmentId) == false) {
+			model.addAttribute("doesNotExist", "Assignment does not exist");
+			return "teacher/assignments";
+		}
+
+		Optional<MultipleChoiceAssignment> multipleChoice = mcAssignmentRepository.findById(assignmentId);
+		if (multipleChoice.isPresent()) {
+			model.addAttribute("questionAdded", "Question added. You can add more.");
+			multipleChoice.get().getQuestion().add(mcq);
+		}
+
+		return "teacher/assignments";
+	}
+
 }

@@ -1,3 +1,4 @@
+<%@page import="java.util.Scanner"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -44,50 +45,78 @@
 		</div>
 	</nav>
 	<div class="container">
-		<div
-			style="background-color: skyblue; color: white; margin-top: 10px; padding: 10px; height: 120%;">
-			<h3>Create assignment of type multiple choice question:</h3>
-		</div>
-		<br>
-		
-		
-		<form action="addMcAssignment" method="post">
-			<h5>Enter the topic:</h5>
-			<h5>
-				<input type="text" name="topic" style="width: 627px">
-			</h5>
-			<hr>
-			<div>
-				<h5>Enter the question:</h5>
-				<h5>
-					<input type="text" name="question" style="width: 627px">
-				</h5>
-				<h5>
-					Option1: <input type="text" name="question.option1">
-					Option2: <input type="text" name="question.option2"
-						style="width: 228px">
-				</h5>
-				<h5>
-					Option3: <input type="text" name="question.option3">
-					Option4: <input type="text" name="question.option4">
-				</h5>
-				<h5>
-					Correct Option:&nbsp &nbsp <input type="radio" value="Option1"
-						name="correctOption">Option1 &nbsp &nbsp<input type="radio"
-						value="Option2" name="correctOption">Option2 &nbsp &nbsp<input
-						type="radio" value="Option3" name="correctOption">Option3 &nbsp &nbsp<input
-						type="radio" value="Option4" name="correctOption">Option4
-				</h5>
+		<p style="color: red;">${notBelong}</p>
+		<p style="color: red;">${doesNotExist}</p>
+		<p style="color: green;">${questionAdded}</p>
+		<div id="accordion">
+			<div class="card">
+				<div class="card-header" id="headingOne">
+					<h5 class="mb-0">
+						<button class="btn btn-link" data-toggle="collapse"
+							data-target="#collapseOne" aria-expanded="false"
+							aria-controls="collapseOne">Create assignment of type
+							multiple choice question.</button>
+					</h5>
+				</div>
+				<div id="collapseOne" class="collapse show"
+					aria-labelledby="headingOne" data-parent="#accordion">
+					<div class="card-body">
+						<form action="addMcAssignment" method="post">
+							<p style="color: green;">${assignmentcreatedmessage}</p>
+							<h5>Enter the topic:</h5>
+							<h5>
+								<input type="text" name="topic" style="width: 627px">
+							</h5>
+							<input type="submit" class="btn btn-success"
+								value="Create Assignment">
+						</form>
+					</div>
+				</div>
 			</div>
-			<h5>
-				Add Next?
-				<button class="btn btn-primary">Yes</button>
-				<button class="btn btn-danger">No</button>
-			</h5>
-			
-			
-			<input type="submit" class="btn btn-success" value="Submit">
-		</form>
+			<div class="card">
+				<div class="card-header" id="headingTwo">
+					<h5 class="mb-0">
+						<button class="btn btn-link collapsed" data-toggle="collapse"
+							data-target="#collapseTwo" aria-expanded="true"
+							aria-controls="collapseTwo">Insert questions to
+							assignment of type multiple choice question.</button>
+					</h5>
+				</div>
+				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+					data-parent="#accordion">
+					<div class="card-body">
+						<form action="insertQuestionsToMc">
+							<h5>
+								Enter Assignment Id: <input type="text" name="assignmentId">
+							</h5>
+							<hr>
+
+							<h5>Enter the question:</h5>
+							<h5>
+								<input type="text" name="question" style="width: 627px">
+							</h5>
+							<h5>
+								Option1: <input type="text" name="option1"> Option2: <input
+									type="text" name="option2" style="width: 228px">
+							</h5>
+							<h5>
+								Option3: <input type="text" name="option3"> Option4: <input
+									type="text" name="option4">
+							</h5>
+							<h5>
+								Correct Option:&nbsp &nbsp <input type="radio" value="Option1"
+									name="correctOption">Option1 &nbsp &nbsp<input
+									type="radio" value="Option2" name="correctOption">Option2
+								&nbsp &nbsp<input type="radio" value="Option3"
+									name="correctOption">Option3 &nbsp &nbsp<input
+									type="radio" value="Option4" name="correctOption">Option4
+							</h5>
+							<input type="submit" class="btn btn-primary" value="Add Question">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

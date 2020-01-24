@@ -21,6 +21,9 @@ public class McQuestion {
 	private String option3;
 	private String option4;
 	private String correctOption;
+	@ManyToOne
+	@JoinColumn(name = "id", insertable = false, updatable = false)
+	private MultipleChoiceAssignment mcAssignment;
 
 	public String getCorrectOption() {
 		return correctOption;
@@ -37,10 +40,6 @@ public class McQuestion {
 	public void setMcAssignment(MultipleChoiceAssignment mcAssignment) {
 		this.mcAssignment = mcAssignment;
 	}
-
-	@ManyToOne
-	@JoinColumn(name = "mcassignment_id" , insertable = false, updatable = false)
-	private MultipleChoiceAssignment mcAssignment;
 
 	public int getId() {
 		return id;
@@ -89,4 +88,12 @@ public class McQuestion {
 	public void setOption4(String option4) {
 		this.option4 = option4;
 	}
+
+	@Override
+	public String toString() {
+		return "McQuestion [id=" + id + ", question=" + question + ", option1=" + option1 + ", option2=" + option2
+				+ ", option3=" + option3 + ", option4=" + option4 + ", correctOption=" + correctOption
+				+ ", mcAssignment=" + mcAssignment + "]";
+	}
+
 }

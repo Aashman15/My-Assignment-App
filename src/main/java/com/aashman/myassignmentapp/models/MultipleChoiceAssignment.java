@@ -60,4 +60,11 @@ public class MultipleChoiceAssignment {
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
 	}
+
+	@Override
+	public String toString() {
+		return "MultipleChoiceAssignment [id=" + id + ", topic=" + topic + ", question=" + question + ", teacher="
+				+ teacher + "]";
+	}
+	
 }
