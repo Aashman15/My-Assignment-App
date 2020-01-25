@@ -1,9 +1,11 @@
 package com.aashman.myassignmentapp.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,8 +24,8 @@ public class MultipleChoiceAssignment {
 	private int id;
 	private String topic;
 
-	@OneToMany(mappedBy = "mcAssignment")
-	private List<McQuestion> question;
+	@OneToMany(mappedBy = "mcAssignment",fetch = FetchType.EAGER)
+	private List<McQuestion> question = new ArrayList<McQuestion>();
 
 	@ManyToOne
 	@JoinColumn(name = "teacher_id")
@@ -63,8 +65,7 @@ public class MultipleChoiceAssignment {
 
 	@Override
 	public String toString() {
-		return "MultipleChoiceAssignment [id=" + id + ", topic=" + topic + ", question=" + question + ", teacher="
-				+ teacher + "]";
+		return "Id of assignment is " + id;
 	}
-	
+
 }

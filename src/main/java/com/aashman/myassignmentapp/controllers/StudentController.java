@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.aashman.myassignmentapp.models.MultipleChoiceAssignment;
 import com.aashman.myassignmentapp.models.NotificationOfStudent;
 import com.aashman.myassignmentapp.models.Student;
 import com.aashman.myassignmentapp.models.StudentRequest;
 import com.aashman.myassignmentapp.models.Teacher;
+import com.aashman.myassignmentapp.repos.McAssignmentRepository;
 import com.aashman.myassignmentapp.repos.StudentRepository;
 import com.aashman.myassignmentapp.repos.TeacherRepository;
 import com.aashman.myassignmentapp.service.NotificationOfStudentService;
@@ -42,6 +44,9 @@ public class StudentController {
 
 	@Autowired
 	NotificationOfStudentService nosService;
+	
+	@Autowired
+	McAssignmentRepository mcaRepository;
 
 	@RequestMapping("/studentLogIn")
 	public String showStudentLogIn() {
@@ -109,10 +114,13 @@ public class StudentController {
 	}
 
 	@RequestMapping("/showStudentAssignmentsPage")
-	public String showStudentAssignments(HttpServletRequest studentRequest) {
+	public String showStudentAssignments(HttpServletRequest studentRequest, Model model) {
 		if (studentRequest.getSession().getAttribute("student") == null) {
 			return "index";
 		}
+		List<MultipleChoiceAssignment> assignmentsOfStudent = studentService
+				.findMcAssignmentsOfStudent((Student) studentRequest.getSession().getAttribute("student"));
+		model.addAttribute("assignmentsOfStudent", assignmentsOfStudent);
 		return "student/assignments";
 	}
 
@@ -168,4 +176,14 @@ public class StudentController {
 
 		return "student/teachers";
 	}
+
+	@RequestMapping("/submitAssignment")
+	public String submitAssignment(@RequestParam("selectedOption") String option, @RequestParam("assignmentId") int assignmentId) {
+		
+      
+		
+		
+		return null;
+	}
+
 }

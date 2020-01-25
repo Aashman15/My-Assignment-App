@@ -27,7 +27,7 @@ public class Teacher {
 	private String userName;
 	private String password;
 	
-	@OneToMany(mappedBy = "teacher")
+	@OneToMany(mappedBy = "teacher",fetch = FetchType.EAGER)
 	private List<MultipleChoiceAssignment> assignments;
 
 	@ManyToMany(fetch = FetchType.EAGER)

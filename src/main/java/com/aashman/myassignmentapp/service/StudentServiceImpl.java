@@ -16,8 +16,6 @@ import com.aashman.myassignmentapp.repos.StudentRepository;
 import com.aashman.myassignmentapp.repos.StudentRequestRepository;
 import com.aashman.myassignmentapp.repos.TeacherRepository;
 
-import net.bytebuddy.implementation.bind.annotation.AllArguments.Assignment;
-
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -32,7 +30,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	TeacherService tService;
-	
+
 	@Autowired
 	McAssignmentRepository mcaRepository;
 
@@ -104,11 +102,13 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public List<MultipleChoiceAssignment> findMcAssignmentsOfStudent(Student student) {
-       Set<Teacher> teachers = student.getTeachers();
-       List<MultipleChoiceAssignment> allMcAssignments = mcaRepository.findAll();
-       for(MultipleChoiceAssignment mca : allMcAssignments) {
-    	   
-       }
-		return null;
+		Set<Teacher> teachers = student.getTeachers();
+		List<MultipleChoiceAssignment> mcAssignmentsOfStudent = new ArrayList<MultipleChoiceAssignment>();
+		 for(Teacher teacher : teachers) {
+			 for(MultipleChoiceAssignment mcAssignment : teacher.getAssignments()) {
+				 mcAssignmentsOfStudent.add(mcAssignment);
+			 }
+		 }
+		return mcAssignmentsOfStudent;
 	}
 }
