@@ -22,4 +22,7 @@ public interface StudentService {
 
 	int submitAssignment(List<McQuestion> mcQuestions, String option1, String option2, String option3, String option4,
 			String option5, String option6, String option7, String option8, String option9, String option10);
+
+	boolean updateStudent(Student student);
+
 }

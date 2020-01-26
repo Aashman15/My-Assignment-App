@@ -30,9 +30,9 @@
 					href="showStudentAssignmentsPage">Assignments</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="showStudentTeachersPage">Teachers</a></li>
-					<li class="nav-item"><a class="nav-link"
+				<li class="nav-item"><a class="nav-link"
 					href="showNotificationsPage?studentId=${student.studentId}">Notifications</a></li>
-					
+
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link active"
@@ -56,7 +56,7 @@
 		<h4>Gender:${student.gender}</h4>
 		<h4>UserName: ${student.userName}</h4>
 		<h4>Password: ${student.password}</h4>
-		<a href="#">Edit Account (not available for now)</a>
+		<a href="editStudent">Edit Account</a>
 	</div>
 </body>
 </html>

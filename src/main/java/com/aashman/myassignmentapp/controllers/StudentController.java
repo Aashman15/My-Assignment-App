@@ -212,7 +212,18 @@ public class StudentController {
 		model.addAttribute("assignmentsOfStudent", assignmentsOfStudent);
 
 		return "student/assignments";
+	}
 
+	@RequestMapping("/editStudent")
+	public String editStudent() {
+		return "student/studentAccountEditForm";
+	}
+
+	@RequestMapping(value = "/editStudent", method = RequestMethod.POST)
+	public String editStudent(@ModelAttribute Student student, Model model) {
+		studentService.updateStudent(student);
+		model.addAttribute("studentUpdated" + "Student updated successfully!");
+		return "student/studentAccountEditForm";
 	}
 
 }

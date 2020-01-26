@@ -57,7 +57,7 @@
 		<h4>Gender:${LoggedInTeacher.gender}</h4>
 		<h4>UserName: ${LoggedInTeacher.userName}</h4>
 		<h4>Password: ${LoggedInTeacher.password}</h4>
-		<a href="#">Edit Account (not available for now)</a>
+		<a href="editTeacher">Edit Account</a>
 	</div>
 
 </body>

@@ -232,4 +232,16 @@ public class TeacherController {
 		model.addAttribute("questionAdded", "Question added. You can add more.");
 		return "teacher/assignments";
 	}
+
+	@RequestMapping("/editTeacher")
+	public String editStudent() {
+		return "teacher/teacherAccountEditForm";
+	}
+
+	@RequestMapping(value = "/editTeacher", method = RequestMethod.POST)
+	public String editTeacher(@ModelAttribute Teacher teacher, Model model) {
+		teacherService.updateTeacher(teacher);
+		model.addAttribute("teacherUpdated" + "Teacher updated successfully!");
+		return "teacher/teacherAccountEditForm";
+	}
 }

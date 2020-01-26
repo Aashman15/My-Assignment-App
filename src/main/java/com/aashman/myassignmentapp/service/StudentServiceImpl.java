@@ -182,4 +182,10 @@ public class StudentServiceImpl implements StudentService {
 		return marks;
 	}
 
+	@Override
+	public boolean updateStudent(Student student) {
+		studentRepository.save(student);
+		return true;
+	}
+
 }

@@ -31,9 +31,9 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Autowired
 	NotificationOfStudentRepository nosRepository;
-	
+
 	@Autowired
-    McAssignmentRepository mcAssignmentRepository;
+	McAssignmentRepository mcAssignmentRepository;
 
 	@Transactional
 	@Override
@@ -77,8 +77,7 @@ public class TeacherServiceImpl implements TeacherService {
 		String sid_tid = Integer.toString(student.getStudentId()) + Integer.toString(teacherId);
 		StudentRequest sr = srService.findSrBySid_Tid(sid_tid);
 
-		String notification = "Teacher: " + teacher.getFirstName()
-				+ "  have accepted your request! "
+		String notification = "Teacher: " + teacher.getFirstName() + "  have accepted your request! "
 				+ " Enjoy assignments. Make your future bright.";
 		NotificationOfStudent nos = new NotificationOfStudent();
 		nos.setStudentId(student.getStudentId());
@@ -97,6 +96,12 @@ public class TeacherServiceImpl implements TeacherService {
 		mcAssignment.setQuestion(mcQuestion);
 		mcAssignment.setTopic(topic);
 		mcAssignment.setTeacher(teacher);
+		return true;
+	}
+
+	@Override
+	public boolean updateTeacher(Teacher teacher) {
+		teacherRepository.save(teacher);
 		return true;
 	}
 }
