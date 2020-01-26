@@ -25,6 +25,7 @@ import com.aashman.myassignmentapp.repos.McAssignmentRepository;
 import com.aashman.myassignmentapp.repos.StudentRepository;
 import com.aashman.myassignmentapp.repos.TeacherRepository;
 import com.aashman.myassignmentapp.service.NotificationOfStudentService;
+import com.aashman.myassignmentapp.service.NotificationOfTeacherService;
 import com.aashman.myassignmentapp.service.StudentRequestService;
 import com.aashman.myassignmentapp.service.StudentService;
 
@@ -48,6 +49,9 @@ public class StudentController {
 
 	@Autowired
 	McAssignmentRepository mcaRepository;
+
+	@Autowired
+	NotificationOfTeacherService notService;
 
 	@RequestMapping("/studentLogIn")
 	public String showStudentLogIn() {
@@ -192,14 +196,17 @@ public class StudentController {
 			@RequestParam(value = "9option", required = false) String option9,
 			@RequestParam(value = "10option", required = false) String option10,
 
-			HttpServletRequest studentRequest, Model model, @RequestParam("assignmentId") int assignmentId) {
+			HttpServletRequest studentRequest, Model model, @RequestParam("assignmentId") int assignmentId,
+			HttpSession session) {
 		MultipleChoiceAssignment mcAssignment = mcaRepository.findById(assignmentId).get();
 		List<McQuestion> questions = mcAssignment.getQuestion();
 
 		int mark = studentService.submitAssignment(questions, option1, option2, option3, option4, option5, option6,
 				option7, option8, option9, option10);
 		model.addAttribute("markInPercent", "You got " + mark + " out of " + questions.size());
-
+		Student student = (Student) session.getAttribute("student");
+		MultipleChoiceAssignment mca = mcaRepository.findById(assignmentId).get();
+		notService.addStudentDidAssignmentNotification(student.getStudentId(), mca, mca.getTeacher().getTeacherId());
 		List<MultipleChoiceAssignment> assignmentsOfStudent = studentService
 				.findMcAssignmentsOfStudent((Student) studentRequest.getSession().getAttribute("student"));
 		model.addAttribute("assignmentsOfStudent", assignmentsOfStudent);

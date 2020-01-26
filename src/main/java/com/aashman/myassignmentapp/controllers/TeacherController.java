@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.aashman.myassignmentapp.models.McQuestion;
 import com.aashman.myassignmentapp.models.MultipleChoiceAssignment;
+import com.aashman.myassignmentapp.models.NotificationOfTeacher;
 import com.aashman.myassignmentapp.models.Student;
 import com.aashman.myassignmentapp.models.Teacher;
 import com.aashman.myassignmentapp.repos.McAssignmentRepository;
 import com.aashman.myassignmentapp.repos.McQuestionsRepository;
+import com.aashman.myassignmentapp.repos.NotificationOfTeacherRepository;
 import com.aashman.myassignmentapp.repos.StudentRequestRepository;
 import com.aashman.myassignmentapp.repos.TeacherRepository;
 import com.aashman.myassignmentapp.service.McAssignmentService;
@@ -54,6 +56,9 @@ public class TeacherController {
 
 	@Autowired
 	McAssignmentService mcAService;
+
+	@Autowired
+	NotificationOfTeacherRepository notRepository;
 
 	@RequestMapping("/teacherLogIn")
 	public String showTeacherLogIn() {
@@ -117,10 +122,13 @@ public class TeacherController {
 	}
 
 	@RequestMapping("/showTeacherNotifications")
-	public String showTeacherStudentRequests(HttpServletRequest request) {
+	public String showTeacherStudentRequests(HttpServletRequest request,Model model) {
 		if (request.getSession().getAttribute("activeTeacher") == null) {
 			return "index";
 		}
+		List<NotificationOfTeacher> allNotifications = notRepository.findAll();
+		model.addAttribute("notificationsOfTeacher",allNotifications);
+		
 		return "teacher/notifications";
 	}
 
@@ -205,9 +213,10 @@ public class TeacherController {
 			model.addAttribute("notBelong", "Assignment with id:" + assignmentId + " does not belong to you");
 			return "teacher/assignments";
 		}
-		if(mcA.getQuestion().size() >= 10) {
-			model.addAttribute("maximumNumberError","You can not add more than 10 questions in a assignment! Please create part 2.");
-		    return "teacher/assignments";
+		if (mcA.getQuestion().size() >= 10) {
+			model.addAttribute("maximumNumberError",
+					"You can not add more than 10 questions in a assignment! Please create part 2.");
+			return "teacher/assignments";
 		}
 		mcq.setMcAssignment(mcA);
 		mcqRepository.save(mcq);
