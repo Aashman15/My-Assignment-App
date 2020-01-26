@@ -1,5 +1,6 @@
 package com.aashman.myassignmentapp.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -122,13 +123,19 @@ public class TeacherController {
 	}
 
 	@RequestMapping("/showTeacherNotifications")
-	public String showTeacherStudentRequests(HttpServletRequest request,Model model) {
+	public String showTeacherStudentRequests(HttpServletRequest request, Model model, HttpSession session) {
 		if (request.getSession().getAttribute("activeTeacher") == null) {
 			return "index";
 		}
 		List<NotificationOfTeacher> allNotifications = notRepository.findAll();
-		model.addAttribute("notificationsOfTeacher",allNotifications);
-		
+		List<NotificationOfTeacher> notifications = new ArrayList<NotificationOfTeacher>();
+		Teacher teacher = teacherService.findTeacherByUserName((String) session.getAttribute("activeTeacher"));
+		for (NotificationOfTeacher not : allNotifications) {
+			if (not.getTeacherId() == teacher.getTeacherId()) {
+				notifications.add(not);
+			}
+		}
+		model.addAttribute("notificationsOfTeacher", notifications);
 		return "teacher/notifications";
 	}
 
