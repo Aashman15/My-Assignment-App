@@ -84,7 +84,6 @@
 									<br>
 									<h6><%=counter%>. ${mcQuestion.question}
 									</h6>
-									<p style="color: red;">${q1error}</p>
 									A. 
 									<input type="radio" value="option1" name="<%=counter%>option">${mcQuestion.option1}
 									&nbsp
