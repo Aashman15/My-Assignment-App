@@ -22,10 +22,10 @@ public class NotificationOfTeacherServiceImpl implements NotificationOfTeacherSe
 	StudentService studentService;
 
 	@Override
-	public boolean addStudentDidAssignmentNotification(int studentID, MultipleChoiceAssignment mca, int teacherId) {
+	public boolean addStudentDidAssignmentNotification(int studentID, MultipleChoiceAssignment mca, int teacherId,String leftWords) {
 		Student student = studentService.findStudentByIntegerId(studentID);
 		String notification = "Your student " + student.getFirstName() + " " + student.getLastName()
-				+ " did your assignment: " + mca.getTopic();
+				+ " did your assignment: " + mca.getTopic() + " " + leftWords;
 		NotificationOfTeacher not = new NotificationOfTeacher();
 		not.setNotification(notification);
 		not.setTeacherId(teacherId);

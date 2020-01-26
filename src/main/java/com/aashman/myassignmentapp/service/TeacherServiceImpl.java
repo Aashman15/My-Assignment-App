@@ -78,8 +78,8 @@ public class TeacherServiceImpl implements TeacherService {
 		StudentRequest sr = srService.findSrBySid_Tid(sid_tid);
 
 		String notification = "Teacher: " + teacher.getFirstName()
-				+ "  have accepted your request! You are his student from now."
-				+ " Enjoy his assignments. Make your future bright.";
+				+ "  have accepted your request! "
+				+ " Enjoy assignments. Make your future bright.";
 		NotificationOfStudent nos = new NotificationOfStudent();
 		nos.setStudentId(student.getStudentId());
 		nos.setNotification(notification);

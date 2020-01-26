@@ -178,14 +178,11 @@ public class StudentController {
 		model.addAttribute("sentSr", sentSr);
 		Set<Teacher> ownTeachers = student.getTeachers();
 		model.addAttribute("ownTeachers", ownTeachers);
-
 		return "student/teachers";
 	}
 
 	@RequestMapping("/submitAssignment")
-	public String submitAssignment(
-
-			@RequestParam(value = "1option", required = false) String option1,
+	public String submitAssignment(@RequestParam(value = "1option", required = false) String option1,
 			@RequestParam(value = "2option", required = false) String option2,
 			@RequestParam(value = "3option", required = false) String option3,
 			@RequestParam(value = "4option", required = false) String option4,
@@ -194,10 +191,8 @@ public class StudentController {
 			@RequestParam(value = "7option", required = false) String option7,
 			@RequestParam(value = "8option", required = false) String option8,
 			@RequestParam(value = "9option", required = false) String option9,
-			@RequestParam(value = "10option", required = false) String option10,
-
-			HttpServletRequest studentRequest, Model model, @RequestParam("assignmentId") int assignmentId,
-			HttpSession session) {
+			@RequestParam(value = "10option", required = false) String option10, HttpServletRequest studentRequest,
+			Model model, @RequestParam("assignmentId") int assignmentId, HttpSession session) {
 		MultipleChoiceAssignment mcAssignment = mcaRepository.findById(assignmentId).get();
 		List<McQuestion> questions = mcAssignment.getQuestion();
 
@@ -206,7 +201,8 @@ public class StudentController {
 		model.addAttribute("markInPercent", "You got " + mark + " out of " + questions.size());
 		Student student = (Student) session.getAttribute("student");
 		MultipleChoiceAssignment mca = mcaRepository.findById(assignmentId).get();
-		notService.addStudentDidAssignmentNotification(student.getStudentId(), mca, mca.getTeacher().getTeacherId());
+		notService.addStudentDidAssignmentNotification(student.getStudentId(), mca, mca.getTeacher().getTeacherId(),
+				" and got " + mark + " out of " + mca.getQuestion().size());
 		List<MultipleChoiceAssignment> assignmentsOfStudent = studentService
 				.findMcAssignmentsOfStudent((Student) studentRequest.getSession().getAttribute("student"));
 		model.addAttribute("assignmentsOfStudent", assignmentsOfStudent);

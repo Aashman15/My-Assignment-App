@@ -50,12 +50,18 @@
 	<div class="container">
 		<p style="font-size: 20px; color: green;">${markInPercent}</p>
 		<div class="accordion" id="accordionExample">
+			<%
+				int count = 0;
+			%>
 			<c:forEach items="${assignmentsOfStudent}" var="mcAssignment">
+				<%
+					count++;
+				%>
 				<div class="card">
 					<div class="card-header" id="headingOne">
 						<h2 class="mb-0">
 							<button class="btn btn-link" type="button" data-toggle="collapse"
-								data-target="#collapseOne" aria-expanded="true"
+								data-target="#collapse<%=count%>" aria-expanded="true"
 								aria-controls="collapseOne">
 								Topic Of The Assignment: <b>${mcAssignment.topic}</b>
 								<p style="font-size: 10px;">from
@@ -64,8 +70,8 @@
 						</h2>
 					</div>
 
-					<div id="collapseOne" class="collapse" aria-labelledby="headingOne"
-						data-parent="#accordionExample">
+					<div id="collapse<%=count%>" class="collapse"
+						aria-labelledby="headingOne" data-parent="#accordionExample">
 						<form action="submitAssignment">
 							<div class="card-body">
 								<%
@@ -75,12 +81,21 @@
 									<%
 										counter++;
 									%>
-									<h6>${mcQuestion.question}</h6>
-									<p style="color:red;">${q1error}</p>
-									<input type="radio" value="option1" name="<%=counter%>option">${mcQuestion.option1}<input
-										type="radio" value="option2" name="<%=counter%>option">${mcQuestion.option2} <input
-										type="radio" value="option3" name="<%=counter%>option">${mcQuestion.option3}<input
-										type="radio" value="option4" name="<%=counter%>option">${mcQuestion.option4}
+									<br>
+									<h6><%=counter%>. ${mcQuestion.question}
+									</h6>
+									<p style="color: red;">${q1error}</p>
+									A. 
+									<input type="radio" value="option1" name="<%=counter%>option">${mcQuestion.option1}
+									&nbsp
+									B.
+									<input type="radio" value="option2" name="<%=counter%>option">${mcQuestion.option2} 
+									&nbsp
+									C.
+									<input type="radio" value="option3" name="<%=counter%>option">${mcQuestion.option3}
+									&nbsp
+									D.
+									<input type="radio" value="option4" name="<%=counter%>option">${mcQuestion.option4}
 									<br>
 								</c:forEach>
 							</div>
