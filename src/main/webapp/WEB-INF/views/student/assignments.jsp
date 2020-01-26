@@ -48,8 +48,9 @@
 
 	<br />
 	<div class="container">
-		<c:forEach items="${assignmentsOfStudent}" var="mcAssignment">
-			<div class="accordion" id="accordionExample">
+		<p style="font-size: 20px; color: green;">${markInPercent}</p>
+		<div class="accordion" id="accordionExample">
+			<c:forEach items="${assignmentsOfStudent}" var="mcAssignment">
 				<div class="card">
 					<div class="card-header" id="headingOne">
 						<h2 class="mb-0">
@@ -75,22 +76,24 @@
 										counter++;
 									%>
 									<h6>${mcQuestion.question}</h6>
-									<input type="radio" value="option1" name="selectedOption">${mcQuestion.option1}<input
-										type="radio" value="option2" name="selectedOption">${mcQuestion.option2} <input
-										type="radio" value="option3" name="selectedOption">${mcQuestion.option3}<input
-										type="radio" value="option4" name="selectedOption">${mcQuestion.option4}
+									<p style="color:red;">${q1error}</p>
+									<input type="radio" value="option1" name="<%=counter%>option">${mcQuestion.option1}<input
+										type="radio" value="option2" name="<%=counter%>option">${mcQuestion.option2} <input
+										type="radio" value="option3" name="<%=counter%>option">${mcQuestion.option3}<input
+										type="radio" value="option4" name="<%=counter%>option">${mcQuestion.option4}
 									<br>
 								</c:forEach>
 							</div>
-							<input type="hidden" name="assignmentId" value="${mcAssignment.id}">
-							<input type="submit" class="btn btn-primary"
-								value="submit assignment" style="margin-left: 20px;"> <br />
+							<input type="hidden" name="assignmentId"
+								value="${mcAssignment.id}"> <input type="submit"
+								class="btn btn-primary" value="submit assignment"
+								style="margin-left: 20px;"> <br />
 						</form>
 						<br /> <br /> <br />
 					</div>
 				</div>
-			</div>
-		</c:forEach>
+			</c:forEach>
+		</div>
 	</div>
 </body>
 </html>

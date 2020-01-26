@@ -14,7 +14,8 @@
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
-<body background="images/pfth.png">
+<body background="images/background.jpg"
+	style="background-repeat:no-repeat;">
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<a class="navbar-brand" href="#">Grihakarya</a>

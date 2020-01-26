@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.aashman.myassignmentapp.models.McQuestion;
 import com.aashman.myassignmentapp.models.MultipleChoiceAssignment;
 import com.aashman.myassignmentapp.models.Student;
 import com.aashman.myassignmentapp.models.StudentRequest;
@@ -104,11 +105,81 @@ public class StudentServiceImpl implements StudentService {
 	public List<MultipleChoiceAssignment> findMcAssignmentsOfStudent(Student student) {
 		Set<Teacher> teachers = student.getTeachers();
 		List<MultipleChoiceAssignment> mcAssignmentsOfStudent = new ArrayList<MultipleChoiceAssignment>();
-		 for(Teacher teacher : teachers) {
-			 for(MultipleChoiceAssignment mcAssignment : teacher.getAssignments()) {
-				 mcAssignmentsOfStudent.add(mcAssignment);
-			 }
-		 }
+		for (Teacher teacher : teachers) {
+			for (MultipleChoiceAssignment mcAssignment : teacher.getAssignments()) {
+				mcAssignmentsOfStudent.add(mcAssignment);
+			}
+		}
 		return mcAssignmentsOfStudent;
 	}
+
+	@Override
+	public int submitAssignment(List<McQuestion> mcQuestions, String option1, String option2, String option3,
+			String option4, String option5, String option6, String option7, String option8, String option9,
+			String option10) {
+
+		int marks = 0;
+
+		if (option1 != null) {
+			if (mcQuestions.get(0).getCorrectOption().equalsIgnoreCase(option1)) {
+				marks++;
+			}
+		}
+
+		if (option2 != null) {
+			if (mcQuestions.get(1).getCorrectOption().equalsIgnoreCase(option2)) {
+				marks++;
+			}
+		}
+
+		if (option3 != null) {
+			if (mcQuestions.get(2).getCorrectOption().equalsIgnoreCase(option3)) {
+				marks++;
+			}
+		}
+
+		if (option4 != null) {
+			if (mcQuestions.get(3).getCorrectOption().equalsIgnoreCase(option4)) {
+				marks++;
+			}
+		}
+
+		if (option5 != null) {
+			if (mcQuestions.get(4).getCorrectOption().equalsIgnoreCase(option5)) {
+				marks++;
+			}
+		}
+
+		if (option6 != null) {
+			if (mcQuestions.get(5).getCorrectOption().equalsIgnoreCase(option6)) {
+				marks++;
+			}
+		}
+
+		if (option7 != null) {
+			if (mcQuestions.get(6).getCorrectOption().equalsIgnoreCase(option7)) {
+				marks++;
+			}
+		}
+
+		if (option8 != null) {
+			if (mcQuestions.get(7).getCorrectOption().equalsIgnoreCase(option8)) {
+				marks++;
+			}
+		}
+
+		if (option9 != null) {
+			if (mcQuestions.get(8).getCorrectOption().equalsIgnoreCase(option9)) {
+				marks++;
+			}
+		}
+
+		if (option10 != null) {
+			if (mcQuestions.get(9).getCorrectOption().equalsIgnoreCase(option10)) {
+				marks++;
+			}
+		}
+		return marks;
+	}
+
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.aashman.myassignmentapp.models.McQuestion;
 import com.aashman.myassignmentapp.models.MultipleChoiceAssignment;
 import com.aashman.myassignmentapp.models.NotificationOfStudent;
 import com.aashman.myassignmentapp.models.Student;
@@ -44,7 +45,7 @@ public class StudentController {
 
 	@Autowired
 	NotificationOfStudentService nosService;
-	
+
 	@Autowired
 	McAssignmentRepository mcaRepository;
 
@@ -178,12 +179,31 @@ public class StudentController {
 	}
 
 	@RequestMapping("/submitAssignment")
-	public String submitAssignment(@RequestParam("selectedOption") String option, @RequestParam("assignmentId") int assignmentId) {
-		
-      
-		
-		
-		return null;
+	public String submitAssignment(
+
+			@RequestParam(value = "1option", required = false) String option1,
+			@RequestParam(value = "2option", required = false) String option2,
+			@RequestParam(value = "3option", required = false) String option3,
+			@RequestParam(value = "4option", required = false) String option4,
+			@RequestParam(value = "5option", required = false) String option5,
+			@RequestParam(value = "6option", required = false) String option6,
+			@RequestParam(value = "7option", required = false) String option7,
+			@RequestParam(value = "8option", required = false) String option8,
+			@RequestParam(value = "9option", required = false) String option9,
+			@RequestParam(value = "10option", required = false) String option10,
+
+			HttpServletRequest studentRequest, Model model, @RequestParam("assignmentId") int assignmentId) {
+		MultipleChoiceAssignment mcAssignment = mcaRepository.findById(assignmentId).get();
+		List<McQuestion> questions = mcAssignment.getQuestion();
+
+		int mark = studentService.submitAssignment(questions, option1, option2, option3, option4, option5, option6,
+				option7, option8, option9, option10);
+		model.addAttribute("markInPercent", "You got " + mark + " out of " + questions.size());
+
+		List<MultipleChoiceAssignment> assignmentsOfStudent = studentService
+				.findMcAssignmentsOfStudent((Student) studentRequest.getSession().getAttribute("student"));
+		model.addAttribute("assignmentsOfStudent", assignmentsOfStudent);
+		return "student/assignments";
 	}
 
 }
