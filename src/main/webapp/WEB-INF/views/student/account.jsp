@@ -44,8 +44,9 @@
 	</nav>
 
 	<div class="container" style="margin-top: 5px;">
-		<div style="background-color: skyblue; color: white;">
-			<h2>Your Account Details:</h2>
+		<div
+			style="background-color: skyblue; color: white; margin-top: 10px; padding: 10px; height: 120%;">
+			<h2>Account Details:</h2>
 		</div>
 		<h4>FirstName: ${student.firstName}</h4>
 		<h4>MiddleName: ${student.middleName}</h4>
@@ -56,7 +57,9 @@
 		<h4>Gender:${student.gender}</h4>
 		<h4>UserName: ${student.userName}</h4>
 		<h4>Password: ${student.password}</h4>
-		<a href="editStudent">Edit Account</a>
+		<a href="editStudent">
+			<button class="btn btn-primary">Edit Account</button>
+		</a>
 	</div>
 </body>
 </html>

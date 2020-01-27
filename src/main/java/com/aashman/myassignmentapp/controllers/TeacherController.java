@@ -234,14 +234,18 @@ public class TeacherController {
 	}
 
 	@RequestMapping("/editTeacher")
-	public String editStudent() {
+	public String editStudent(HttpSession session, Model model) {
+		Teacher teacher = teacherService.findTeacherByUserName((String) session.getAttribute("activeTeacher"));
+		model.addAttribute("teacherForUpdate", teacher);
 		return "teacher/teacherAccountEditForm";
 	}
 
 	@RequestMapping(value = "/editTeacher", method = RequestMethod.POST)
-	public String editTeacher(@ModelAttribute Teacher teacher, Model model) {
-		teacherService.updateTeacher(teacher);
-		model.addAttribute("teacherUpdated" + "Teacher updated successfully!");
+	public String editTeacher(@ModelAttribute Teacher updatedTeacher, Model model, HttpSession session) {
+		Teacher teacher = teacherService.findTeacherByUserName((String) session.getAttribute("activeTeacher"));
+		updatedTeacher.setTeacherId(teacher.getTeacherId());
+		teacherService.updateTeacher(teacher, updatedTeacher);
+		model.addAttribute("msg", "updated succesfully");
 		return "teacher/teacherAccountEditForm";
 	}
 }

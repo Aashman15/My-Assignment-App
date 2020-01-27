@@ -13,5 +13,5 @@ public interface TeacherService {
      Teacher findTeacherByUserName(String username);
      boolean addStudentToList(Student student, String teacherUserName, Teacher teacher);
      boolean addMcAssignment(List<McQuestion> mcQuestion, String topic, Teacher teacher);
-     boolean updateTeacher(Teacher teacher);
+     boolean updateTeacher(Teacher teacher,Teacher updatedTeacher);
 }

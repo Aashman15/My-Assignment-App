@@ -17,64 +17,75 @@
 <body>
 
 	<div class="container" style="margin-left: 30%;">
+		<br>
+		<p style="color: green;">${msg}</p>
 		<div
 			style="background-color: skyblue; text-align: center; border-radius: 5px; width: 500px;">
-			<h3 style="color: white;">Edit your account here.</h3>
+			<h3 style="color: white; height: 50px; padding-top: 5px;">Edit
+				your account here.</h3>
 		</div>
-		<form>
+		<form action="editTeacher" method="post">
 			<div class="row">
 				<div class="col">
-					<input style="width: 500px;" type="text" class="form-control"
-						placeholder="First name" name="firstName">
+					<label>First Name</label> <input style="width: 500px;" type="text"
+						class="form-control" placeholder="First name" name="firstName"
+						value="${teacherForUpdate.firstName}">
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col">
-					<input style="width: 500px;" type="text" class="form-control"
-						placeholder="Middle Name" name="middleName">
+					<label>Middle Name</label> <input style="width: 500px;" type="text"
+						class="form-control" placeholder="Middle Name" name="middleName"
+						value="${teacherForUpdate.middleName}">
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col">
-					<input style="width: 500px;" type="text" class="form-control"
-						placeholder="Last name" name="lastName">
+					<label>Last Name</label> <input style="width: 500px;" type="text"
+						class="form-control" placeholder="Last name" name="lastName"
+						value="${teacherForUpdate.lastName}">
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col">
-					<input style="width: 500px;" type="text" class="form-control"
-						placeholder="Address" name="address">
+					<label>Address</label> <input style="width: 500px;" type="text"
+						class="form-control" placeholder="Address" name="address"
+						value="${teacherForUpdate.address}">
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col">
-					<input style="width: 500px;" type="text" class="form-control"
-						placeholder="Phone Number" name="phoneNumber">
+					<label>Phone Number</label> <input style="width: 500px;"
+						type="text" class="form-control" placeholder="Phone Number"
+						name="phoneNumber" value="${teacherForUpdate.phoneNumber}">
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col">
-					<input style="width: 500px;" type="text" class="form-control"
-						placeholder="Date Of Birth" name="dob">
+					<label>Birthday</label> <input style="width: 500px;" type="text"
+						class="form-control" placeholder="Date Of Birth" name="dob"
+						value="${teacherForUpdate.dob}">
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col">
-					<input style="width: 500px;" type="text" class="form-control"
-						placeholder="User Name" name="userName">
+					<label>User Name</label> <input style="width: 500px;" type="text"
+						class="form-control" placeholder="User Name" name="userName"
+						value="${teacherForUpdate.userName}" readonly="readonly">
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col">
-					<input style="width: 500px;" type="password" class="form-control"
-						placeholder="Password" name="password">
+					<label>Password</label> <input style="width: 500px;"
+						type="password" class="form-control" placeholder="Password"
+						name="password" value="${teacherForUpdate.password}">
 				</div>
 			</div>
 			<br>
@@ -88,11 +99,10 @@
 			<br>
 			<div class="row">
 				<div class="col">
-					<input type="submit" class="btn btn-primary" value="Sign Up">
+					<input type="submit" class="btn btn-primary" value="Update">
 				</div>
 			</div>
 		</form>
 	</div>
-
 </body>
 </html>

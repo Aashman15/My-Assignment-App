@@ -100,7 +100,16 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public boolean updateTeacher(Teacher teacher) {
+	public boolean updateTeacher(Teacher teacher, Teacher updatedTeacher) {
+		teacher.setFirstName(updatedTeacher.getFirstName());
+		teacher.setMiddleName(updatedTeacher.getMiddleName());
+		teacher.setLastName(updatedTeacher.getLastName());
+		teacher.setAddress(updatedTeacher.getAddress());
+		teacher.setDob(updatedTeacher.getDob());
+		teacher.setGender(updatedTeacher.getGender());
+		teacher.setPassword(updatedTeacher.getPassword());
+		teacher.setUserName(updatedTeacher.getUserName());
+		teacher.setPhoneNumber(updatedTeacher.getPhoneNumber());
 		teacherRepository.save(teacher);
 		return true;
 	}

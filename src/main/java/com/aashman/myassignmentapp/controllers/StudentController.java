@@ -215,14 +215,17 @@ public class StudentController {
 	}
 
 	@RequestMapping("/editStudent")
-	public String editStudent() {
+	public String editStudent(Model model, HttpSession session) {
+		model.addAttribute("studentForUpdate", (Student) session.getAttribute("student"));
 		return "student/studentAccountEditForm";
 	}
 
 	@RequestMapping(value = "/editStudent", method = RequestMethod.POST)
-	public String editStudent(@ModelAttribute Student student, Model model) {
+	public String editStudent(@ModelAttribute Student student, Model model, HttpSession session) {
+		Student s = (Student) session.getAttribute("student");
+		student.setStudentId(s.getStudentId());
 		studentService.updateStudent(student);
-		model.addAttribute("studentUpdated" + "Student updated successfully!");
+		model.addAttribute("msg", "updated successfully!");
 		return "student/studentAccountEditForm";
 	}
 
