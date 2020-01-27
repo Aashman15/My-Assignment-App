@@ -66,9 +66,9 @@
 			<br>
 			<div class="row">
 				<div class="col">
-					<label>Birthday</label> <input style="width: 500px;" type="text"
+					<label>Birthday</label> <input style="width: 500px;" type="date"
 						class="form-control" placeholder="Date Of Birth" name="dob"
-						value="${studentForUpdate.dob}">
+						value="${studentForUpdate.dob}" max="2018-00-00" min="1918-00-00">
 				</div>
 			</div>
 			<br>

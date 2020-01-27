@@ -15,82 +15,86 @@
 	
 </script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-	$(function() {
-		$("#datepicker").datepicker();
-	});
-</script>
 </head>
 <body>
 	<div style="margin-left: 30%;">
+		<br>
 		<div
-			style="background-color: skyblue; text-align: center; border-radius: 5px; width: 500px;">
-			<h3 style="color: white;">Student SignUp Form</h3>
+			style="padding-top: 4px; height: 50px; background-color: skyblue; text-align: center; border-radius: 5px; width: 500px;">
+			<h3 style="color: white;">Student Sign Up Form</h3>
 		</div>
 		<p style="color: green;">${message}</p>
 		<p style="color: red; font-size: 20px;">${msg}</p>
 		<form action="registerStudent" method="post">
 			<div class="row">
 				<div class="col">
-					<input style="width: 500px;" type="text" class="form-control"
-						placeholder="First name" name="firstName">
+					<label>First Name</label> <input style="width: 500px;" type="text"
+						class="form-control" placeholder="First name" name="firstName"
+						required="required">
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col">
-					<input style="width: 500px;" type="text" class="form-control"
-						placeholder="Middle Name" name="middleName">
+					<label>Middle Name</label> <input style="width: 500px;" type="text"
+						class="form-control" placeholder="Middle Name" name="middleName">
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col">
-					<input style="width: 500px;" type="text" class="form-control"
-						placeholder="Last name" name="lastName">
+					<label>Last Name</label> <input style="width: 500px;" type="text"
+						class="form-control" placeholder="Last name" name="lastName"
+						required="required">
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col">
-					<input style="width: 500px;" type="text" class="form-control"
-						placeholder="Address" name="address">
+					<label>Address Name</label> <input style="width: 500px;"
+						type="text" class="form-control" placeholder="Address"
+						name="address" required="required">
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col">
-					<input style="width: 500px;" type="text" class="form-control"
-						placeholder="Phone Number" name="phoneNumber">
+					<label>Phone Number</label> <input style="width: 500px;"
+						type="text" class="form-control" placeholder="Phone Number"
+						name="phoneNumber" required="required">
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col">
-					<input style="width: 500px;" type="text" class="form-control"
-						placeholder="Date Of Birth" name="dob">
+					<label>Birthday</label> <input style="width: 500px;" type="date"
+						class="form-control" placeholder="Date Of Birth" name="dob"
+						required="required" max="2018-00-00" min="1918-00-00">
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col">
-					<input style="width: 500px;" type="text" class="form-control"
-						placeholder="User Name" name="userName">
+					<label>User Name</label> <input style="width: 500px;" type="text"
+						class="form-control" placeholder="User Name" name="userName"
+						required="required">
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col">
-					<input style="width: 500px;" type="password" class="form-control"
-						placeholder="Password" name="password">
+					<label>Password Name</label> <input style="width: 500px;"
+						type="password" class="form-control" placeholder="Password"
+						name="password" required="required">
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col">
-					Gender: <input type="radio" name="gender" value="male">Male
-					<input type="radio" name="gender" value="female">Female <input
-						type="radio" name="gender" value="other">Other
+					Gender: <input type="radio" name="gender" value="male"
+						required="required">Male <input type="radio" name="gender"
+						value="female" required="required">Female <input
+						type="radio" name="gender" value="other" required="required">Other
 				</div>
 			</div>
 			<br>
@@ -99,8 +103,9 @@
 					<input type="submit" class="btn btn-primary" value="Sign Up">
 				</div>
 			</div>
-			<a href="showIndex">Go back to login.</a>
+			<br> <a href="showIndex">Go back to login.</a>
 		</form>
+		<br> <br>
 	</div>
 </body>
 </html>
