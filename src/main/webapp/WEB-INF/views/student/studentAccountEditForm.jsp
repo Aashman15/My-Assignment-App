@@ -15,7 +15,32 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="#">Grihakarya</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNavDropdown">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" href="showStudentHome">Home
+				</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="showStudentAssignmentsPage">Assignments</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="showStudentTeachersPage">Teachers</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="showNotificationsPage?studentId=${student.studentId}">Notifications</a></li>
+			</ul>
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item active"><a class="nav-link"
+					href="showStudentAccountPage">Account</a></li>
+				<li class="nav-item"><a class="nav-link" href="showIndex">Log
+						Out</a></li>
+			</ul>
+		</div>
+	</nav>
 	<div class="container" style="margin-left: 30%;">
 		<br>
 		<P style="color: green;">${msg}</P>
